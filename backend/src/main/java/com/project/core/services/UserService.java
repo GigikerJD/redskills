@@ -2,6 +2,7 @@ package com.project.core.services;
 
 import java.util.List;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.project.core.entities.User;
@@ -14,12 +15,15 @@ import lombok.RequiredArgsConstructor;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public List<User> getUsers(){
         return userRepository.findAll();
     }
 
     public void createUser(User user){
+        String hashPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(hashPassword);
         userRepository.save(user);
     }
 
