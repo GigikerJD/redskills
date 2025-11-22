@@ -4,6 +4,7 @@ import { DashboardComponent } from '../dashboard/dashboard.component';
 import { SettingsComponent } from '../settings/settings.component';
 import { ProfileComponent } from '../profile/profile.component';
 import { FormsComponent } from '../forms/forms.component';
+import { authGuard } from '../config/auth.guard';
 
 export const routes: Routes = [
     {
@@ -14,21 +15,25 @@ export const routes: Routes = [
     {
         path: "fill_form",
         title: "Formulaire à remplir & compléter",
-        component: FormsComponent
+        component: FormsComponent,
+        canActivate: [authGuard]
     },
     {
         path: "dashboard",
         title: "Redskills - choix du programme",
-        component: DashboardComponent
+        component: DashboardComponent,
+        canActivate: [authGuard]
     },
     {
         path: "settings",
         title: "Paramètres",
-        component: SettingsComponent
+        component: SettingsComponent,
+        canActivate: [authGuard]
     },
     {
         path: "profile",
         title: "Vos progressions",
-        component: ProfileComponent
+        component: ProfileComponent,
+        canActivate: [authGuard]
     }
 ];
