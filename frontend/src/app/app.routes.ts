@@ -1,9 +1,9 @@
 import { Routes } from '@angular/router';
 import { MainpageComponent } from '../mainpage/mainpage.component';
-import { ApplicationComponent } from '../application/application.component';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 import { SettingsComponent } from '../settings/settings.component';
 import { ProfileComponent } from '../profile/profile.component';
+import { FormsComponent } from '../forms/forms.component';
 
 export const routes: Routes = [
     {
@@ -14,7 +14,7 @@ export const routes: Routes = [
     {
         path: "fill_form",
         title: "Formulaire à remplir & compléter",
-        component: ApplicationComponent
+        component: FormsComponent
     },
     {
         path: "dashboard",
