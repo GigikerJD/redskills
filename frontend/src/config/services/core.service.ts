@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie';
 
@@ -6,7 +7,10 @@ import { CookieService } from 'ngx-cookie';
 })
 export class CoreService {
 
-  constructor(private cookieService: CookieService) { }
+  constructor(
+    private cookieService: CookieService,
+    private http: HttpClient
+  ) { }
 
   getUserID(): string {
     return this.cookieService.get("userID") || '';

@@ -1,10 +1,10 @@
 import { Routes } from '@angular/router';
-import { MainpageComponent } from '../mainpage/mainpage.component';
-import { DashboardComponent } from '../dashboard/dashboard.component';
-import { SettingsComponent } from '../settings/settings.component';
-import { ProfileComponent } from '../profile/profile.component';
-import { FormsComponent } from '../forms/forms.component';
-import { authGuard } from '../config/auth.guard';
+import { MainpageComponent } from '../components/mainpage/mainpage.component';
+import { DashboardComponent } from '../components/dashboard/dashboard.component';
+import { SettingsComponent } from '../components/settings/settings.component';
+import { ProfileComponent } from '../components/profile/profile.component';
+import { FormsComponent } from '../components/forms/forms.component';
+import { authGuard } from '../config/global/auth.guard';
 
 export const routes: Routes = [
     {
