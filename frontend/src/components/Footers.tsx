@@ -1,17 +1,14 @@
-
+import { RedSkillAuth } from "../config/AppProvider"
 
 export const Footer = () => {
-    return(
-        <footer>
-
-        </footer>
-    )
+    const { isLogged } = RedSkillAuth();
+    return isLogged ? <DashboardFooter/> : <DefaultFooter/>
 }
 
 const DefaultFooter = () => {
     return(
         <footer>
-
+            Je suis le footer par défaut
         </footer>
     )
 }
@@ -19,7 +16,7 @@ const DefaultFooter = () => {
 const DashboardFooter = () => {
     return(
         <footer>
-            
+            Je suis le footer après connexion
         </footer>
     )
 }

@@ -1,27 +1,22 @@
-
+import { RedSkillAuth } from "../config/AppProvider"
 
 export const Header = () => {
-
-    return(
-        <header>
-
-        </header>
-    )
+    const { isLogged } = RedSkillAuth();
+    return isLogged ? <DashboardHeader/> : <DefaultHeader/>
 }
 
 const DefaultHeader = () => {
-
     return(
         <header>
-
+            Je suis le header par défaut
         </header>
     )
 }
 
-const Dashboard = () => {
+const DashboardHeader = () => {
     return(
         <header>
-            
+            Je suis le header après connexion
         </header>
     )
 }
