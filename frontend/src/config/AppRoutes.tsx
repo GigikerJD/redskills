@@ -5,18 +5,33 @@ import { Dashboard } from "../pages/Dashboard";
 import { Settings } from "../pages/Settings";
 import { Profile } from "../pages/Profile";
 import { Forms } from "../pages/Forms";
+import { ProtectedRoute } from "./AuthGuard";
 
+const pages = [
+  { path: "/", component: <Home /> },
+  { path: "/dashboard", component: <Dashboard /> },
+  { path: "/settings", component: <Settings /> },
+  { path: "/profile", component: <Profile /> },
+  { path: "/forms", component: <Forms /> },
+];
 
 const router = createBrowserRouter(
-    createRoutesFromElements(
-        <Route path="/" caseSensitive element={<Layout/>}>
-            <Route index caseSensitive  element={<Home/>}/>
-            <Route path="/dasboard" caseSensitive element={<Dashboard/>}/>
-            <Route path="/settings" caseSensitive element={<Settings/>}/>
-            <Route path="/profile" caseSensitive element={<Profile/>}/>
-            <Route path="/" caseSensitive element={<Forms/>} />
-        </Route>
-    )
-)
+  createRoutesFromElements(
+    <Route path="/" caseSensitive element={<Layout />}>
+      {pages.map((page) => {
+        if (page.path === "/") {
+          return <Route index caseSensitive element={<Home/>} />;
+        }
+        return (
+          <Route
+            path={page.path}
+            caseSensitive
+            element={<ProtectedRoute>{page.component}</ProtectedRoute>}
+          />
+        );
+      })}
+    </Route>
+  )
+);
 
 export default router;
