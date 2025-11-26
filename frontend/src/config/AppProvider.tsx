@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, type ReactNode } from "react";
+import { createContext, useContext, useMemo, useState, type ReactNode } from "react";
 import Cookies from "universal-cookie";
 
 interface RedSkillContextType {
@@ -9,49 +9,54 @@ interface RedSkillContextType {
     login: (userID: string) => void;
     logout: () => void;
 }
-
-const RedSkillContext = createContext<RedSkillContextType | undefined>(undefined);
-
-interface AppProviderProps {
+interface RedSkillProviderProps {
     children: ReactNode;
 }
 
-export const RedSkillProvider = ({ children }: AppProviderProps) => {
-    const cookies = new Cookies();
-    const [userID, setUserID] = useState<string | null>(cookies.get("userID") || "");
+const RedSkillContext = createContext<RedSkillContextType | undefined>(undefined);
+const cookies = new Cookies();
+
+export const RedSkillProvider = ({ children }: RedSkillProviderProps) => {
+    const [userID, setUserID] = useState<string | null>(cookies.get("userID") || null);
     const [isLogged, setIsLogged] = useState<boolean>(cookies.get("isLogged") || false);
 
     function login(userID: string): void {
         cookies.set("userID", userID, {
             path: "/",
-            domain: "http://localhost:5173",
-            secure: true,
+            domain: "localhost",
+            secure: false,
             httpOnly: false,
         });
         cookies.set("isLogged", true, {
             path: "/",
-            domain: "http://localhost:5173",
-            secure: true,
+            domain: "localhost",
+            secure: false,
             httpOnly: false,
         });
+        setUserID(userID);
+        setIsLogged(true);
     }
 
     function logout(): void {
-        cookies.remove("userID");
-        cookies.remove("isLogged");
+        cookies.remove("userID", { path: "/", domain: "localhost" });
+        cookies.remove("isLogged", { path: "/", domain: "localhost" });
+        setUserID("");
+        setIsLogged(false);
     }
 
+    const memoProviderValues = useMemo(() => {
+        return {
+            userID,
+            isLogged,
+            setUserID,
+            setIsLogged,
+            login,
+            logout
+        }
+    }, [isLogged, userID]);
+
     return (
-        <RedSkillContext.Provider
-            value={{
-                userID,
-                isLogged,
-                setUserID,
-                setIsLogged,
-                login,
-                logout,
-            }}
-        >
+        <RedSkillContext.Provider value={memoProviderValues}>
             {children}
         </RedSkillContext.Provider>
     );

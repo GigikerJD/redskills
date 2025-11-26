@@ -20,10 +20,11 @@ const router = createBrowserRouter(
     <Route path="/" caseSensitive element={<Layout />}>
       {pages.map((page) => {
         if (page.path === "/") {
-          return <Route index caseSensitive element={<Home/>} />;
+          return <Route key={page.path} index caseSensitive element={<Home/>} />;
         }
         return (
           <Route
+            key={page.path}
             path={page.path}
             caseSensitive
             element={<ProtectedRoute>{page.component}</ProtectedRoute>}
