@@ -31,19 +31,4 @@ public class JWTService {
             .signWith(Keys.hmacShaKeyFor(secretKey.getBytes()), SignatureAlgorithm.HS256)
             .compact();
     }
-
-    public String generateToken(String userID, String email, String firstname, String lastname){
-        Instant now = Instant.now();
-
-        return Jwts.builder()
-            .setSubject(userID)
-            .claim("email", email)
-            .claim("firstname", firstname)
-            .claim("lastname", lastname)
-            .setIssuedAt(Date.from(now))
-            .setExpiration(Date.from(now.plus(expiration, ChronoUnit.MILLIS)))
-            .signWith(Keys.hmacShaKeyFor(secretKey.getBytes()), SignatureAlgorithm.HS256)
-            .compact();
-    }
-
 }
