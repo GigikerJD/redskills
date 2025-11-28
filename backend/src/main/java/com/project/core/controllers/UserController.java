@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.core.dto.LoginRequest;
+import com.project.core.dto.RegisterRequest;
 import com.project.core.entities.User;
 import com.project.core.services.JWTService;
 import com.project.core.services.UserService;
@@ -58,24 +59,18 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest){
         var map = new HashMap<String, Object>();
-        var user = userService.getUserByEmail(loginRequest.getEmail());
-        var result = userService.login(user.getEmail(), user.getPassword());
+        var result = userService.login(loginRequest.getEmail(), loginRequest.getPassword());
         switch (result){
             case "Utilisateur inexistant !" -> {
-                map.putAll(Map.of(
-                        "type", "error",
-                        "message", result
-                ));
+                map.putAll(Map.of("type", "error", "message", result));
                 return ResponseEntity.status(404).body(map);
             }
             case "Mot de passe incorrect" -> {
-                map.putAll(Map.of(
-                        "type", "error",
-                        "message", result
-                ));
-                return ResponseEntity.status(404).body(map);
+                map.putAll(Map.of("type", "error", "message", result));
+                return ResponseEntity.status(401).body(map);
             }
             default -> {
+                var user = userService.getUserByEmail(loginRequest.getEmail());
                 map.putAll(Map.of(
                         "type", "success",
                         "message", result,
@@ -87,8 +82,16 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> createUser(@RequestBody User user) {
+    public ResponseEntity<?> createUser(@RequestBody RegisterRequest userRequest) {
         var map = new HashMap<String, Object>();
+
+        var user = User.builder()
+            .email(userRequest.getEmail())
+            .password(userRequest.getPassword())
+            .firstname(userRequest.getFirstname())
+            .lastname(userRequest.getLastname())
+            .DOB(userRequest.getDOB())
+            .build();
 
         if(user == null){
             map.putAll(Map.of(
@@ -104,7 +107,7 @@ public class UserController {
                 "message", "Email can't be null"
             ));
             return ResponseEntity.status(400).body(map);
-        }
+        }   
 
         var existingUser = userService.getUserByEmail(user.getEmail());
         if (existingUser != null){
@@ -115,7 +118,7 @@ public class UserController {
             return ResponseEntity.status(409).body(map);
         }
 
-        if(user.getPassword().equals("")){
+        if(user.getPassword().isEmpty()){
             map.putAll(Map.of(
                 "type", "error",
                 "message", "Password can't be null"
@@ -123,9 +126,7 @@ public class UserController {
             return ResponseEntity.status(400).body(map);
         }
 
-        if(user.getFirstname().equals("")
-            || user.getLastname().equals("")
-        ) {
+        if(user.getFirstname().isEmpty() || user.getLastname().isEmpty()) {
             map.putAll(Map.of(
                 "type", "error",
                 "message", "Names can't be empty"
@@ -134,12 +135,7 @@ public class UserController {
         }
 
         var newUser = userService.createUser(user);
-        String generatedToken = jwtService.generateToken(
-            newUser.getId(), 
-            newUser.getEmail(),
-            newUser.getFirstname(),
-            newUser.getLastname()
-        );
+        String generatedToken = jwtService.generateToken(newUser.getId(), newUser.getEmail());
         map.putAll(Map.of(
             "type", "success",
             "message", "Votre compte a été créé",
