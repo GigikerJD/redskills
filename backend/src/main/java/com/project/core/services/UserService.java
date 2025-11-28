@@ -21,10 +21,27 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public void createUser(User user){
+    public User getUserByID(String id){
+        return userRepository.findById(id).orElse(null);
+    }
+    
+    public User getUserByEmail(String email){
+        return userRepository
+            .findAll()
+            .stream()
+            .filter(u -> u.getEmail().equals(email))
+            .findFirst()
+            .orElse(null);
+    }
+
+    public List<User> getUserWithEmailStartinWith(String prefix){
+        return null;
+    }
+
+    public User createUser(User user){
         String hashPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(hashPassword);
-        userRepository.save(user);
+        return userRepository.save(user);
     }
 
     public void deleteUser(User user){
@@ -39,4 +56,16 @@ public class UserService {
             .count() > 0;
     }
 
+    public boolean isUserAlreadyEnlisted(String userID){
+        return userRepository.findById(userID).isPresent();
+    }
+
+    public String login(String email, String password){
+        var user = getUserByEmail(email);
+        if (user == null) return "Utilisateur inexistant !";
+
+        var isPasswordCorrect = passwordEncoder.matches(password, user.getPassword());
+        if (!isPasswordCorrect) return "Mot de passe incorrect";
+        return !isPasswordCorrect ? "Mot de passe incorrect" : "Connexion réussie";
+    }
 }
