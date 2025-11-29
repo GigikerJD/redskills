@@ -15,8 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.core.dto.LoginRequest;
-import com.project.core.dto.RegisterRequest;
+import com.project.core.dto.request.LoginRequest;
+import com.project.core.dto.request.RegisterRequest;
+import com.project.core.dto.response.ApiResponse;
 import com.project.core.entities.User;
 import com.project.core.services.JWTService;
 import com.project.core.services.UserService;
@@ -40,20 +41,11 @@ public class UserController {
     public ResponseEntity<?> getUser(@PathVariable String userID) {
         var map = new HashMap<String, Object>();
         var user = userService.getUserByID(userID);
-        if (user == null){
-            map.putAll(Map.of(
-                "type", "error",
-                "message", "Utilisateur inexistant"
-            ));
-            return ResponseEntity.status(404).body(map);
-        }
+        if (user == null)
+            return ApiResponse.errorResponse("Utilisateur inexistant", 404);
 
-        map.putAll(Map.of(
-            "type", "success",
-            "message", "Utilisateur trouvé",
-            "user", user
-        ));
-        return ResponseEntity.ok(map);
+        map.put("user", user);
+        return ApiResponse.successResponse("Utilisateur trouvé", map);
     }
 
     @PostMapping("/login")
@@ -62,21 +54,15 @@ public class UserController {
         var result = userService.login(loginRequest.getEmail(), loginRequest.getPassword());
         switch (result){
             case "Utilisateur inexistant !" -> {
-                map.putAll(Map.of("type", "error", "message", result));
-                return ResponseEntity.status(404).body(map);
+                return ApiResponse.errorResponse(result, 404);
             }
             case "Mot de passe incorrect" -> {
-                map.putAll(Map.of("type", "error", "message", result));
-                return ResponseEntity.status(401).body(map);
+                return ApiResponse.errorResponse(result, 401);
             }
             default -> {
                 var user = userService.getUserByEmail(loginRequest.getEmail());
-                map.putAll(Map.of(
-                        "type", "success",
-                        "message", result,
-                        "userID", user.getId()
-                ));
-                return ResponseEntity.ok(map);
+                map.put("userID", user.getId());
+                return ApiResponse.successResponse(result, map);
             }
         }
     }
@@ -84,6 +70,19 @@ public class UserController {
     @PostMapping("/create")
     public ResponseEntity<?> createUser(@RequestBody RegisterRequest userRequest) {
         var map = new HashMap<String, Object>();
+
+        if (userRequest.getEmail().trim().isEmpty())
+            return ApiResponse.errorResponse("L'email est vide", 400);
+
+        var existingUser = userService.getUserByEmail(userRequest.getEmail());
+        if (existingUser != null)
+            return ApiResponse.errorResponse("L'utilisateur existe déjà !", 409);
+
+        if(userRequest.getPassword().isEmpty())
+            return ApiResponse.errorResponse("Le mot de passe ne doit pas être vide", 400);
+
+        if(userRequest.getFirstname().isEmpty() || userRequest.getLastname().isEmpty())
+            return ApiResponse.errorResponse("Les noms sont manquants", 400);
 
         var user = User.builder()
             .email(userRequest.getEmail())
@@ -93,76 +92,20 @@ public class UserController {
             .DOB(userRequest.getDOB())
             .build();
 
-        if(user == null){
-            map.putAll(Map.of(
-                "type", "error",
-                "message", "Object user can't be null"
-            ));
-            return ResponseEntity.status(400).body(map);
-        }
-
-        if (user.getEmail().trim().isEmpty()){
-            map.putAll(Map.of(
-                "type", "error",
-                "message", "Email can't be null"
-            ));
-            return ResponseEntity.status(400).body(map);
-        }   
-
-        var existingUser = userService.getUserByEmail(user.getEmail());
-        if (existingUser != null){
-            map.putAll(Map.of(
-                "type", "error",
-                "message", "User already exists !"
-            ));
-            return ResponseEntity.status(409).body(map);
-        }
-
-        if(user.getPassword().isEmpty()){
-            map.putAll(Map.of(
-                "type", "error",
-                "message", "Password can't be null"
-            ));
-            return ResponseEntity.status(400).body(map);
-        }
-
-        if(user.getFirstname().isEmpty() || user.getLastname().isEmpty()) {
-            map.putAll(Map.of(
-                "type", "error",
-                "message", "Names can't be empty"
-            ));
-            return ResponseEntity.status(400).body(map);
-        }
-
         var newUser = userService.createUser(user);
         String generatedToken = jwtService.generateToken(newUser.getId(), newUser.getEmail());
-        map.putAll(Map.of(
-            "type", "success",
-            "message", "Votre compte a été créé",
-            "token", generatedToken,
-            "userID", newUser.getId()
-        ));
-        return ResponseEntity.status(201).body(map);
+        map.putAll(Map.of("token", generatedToken, "userID", newUser.getId()));
+        return ApiResponse.successResponse("Votre compte a été créé", 201, map);
     }
 
     @DeleteMapping("/delete")
     public ResponseEntity<?> deleteUser(@RequestParam String userID){
-        var map = new HashMap<String, Object>();
         User user = userService.getUserByID(userID);
 
-        if(user == null){
-            map.putAll(Map.of(
-                "type", "error",
-                "message", "User doesn't event exist"
-            ));
-            return ResponseEntity.status(404).body(map);
-        }
+        if(user == null)
+            return ApiResponse.errorResponse("Utilisateur inexistant", 404);
 
         userService.deleteUser(user);
-        map.putAll(Map.of(
-            "type", "success",
-            "message", "Votre compte a été supprimé avec succès"
-        ));
-        return ResponseEntity.ok(map);
+        return ApiResponse.successResponse("Votre compte a été supprimé avec succès");
     }
 }

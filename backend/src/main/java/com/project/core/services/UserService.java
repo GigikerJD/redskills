@@ -1,6 +1,5 @@
 package com.project.core.services;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,10 +29,6 @@ public class UserService {
         return userRepository.findByEmail(email).orElse(null);
     }
 
-    public List<User> getUserWithEmailStartinWith(String prefix){
-        return null;
-    }
-
     public User createUser(User user){
         String hashPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(hashPassword);
@@ -61,10 +56,6 @@ public class UserService {
         if (user == null) return "Utilisateur inexistant !";
 
         var isPasswordCorrect = passwordEncoder.matches(password, user.getPassword());
-        return !isPasswordCorrect ? "Mot de passe incorrect" : "Connexion réussie";
-    }
-
-    public String register(String email, String password, String firstname, String lastname, LocalDate DOB){
-        return "";
+        return isPasswordCorrect ? "Connexion réussie" : "Mot de passe incorrect";
     }
 }
