@@ -43,8 +43,7 @@ public class UserService {
         return userRepository
             .findAll()
             .stream()
-            .filter(u -> u.getEmail().equals(user.getEmail()))
-            .count() > 0;
+            .anyMatch(u -> u.getEmail().equals(user.getEmail()));
     }
 
     public boolean isUserAlreadyEnlisted(String userID){
