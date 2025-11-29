@@ -42,8 +42,8 @@ public class User {
     @NonNull
     private String password;
 
-    @Field(name="DOB")
-    private LocalDate DOB;
+    @Field(name="birthdate")
+    private LocalDate birthdate;
 
     @Field(name="status")
     private String status;

@@ -39,13 +39,13 @@ public class UserController {
 
     @GetMapping("/{userID}")
     public ResponseEntity<?> getUser(@PathVariable String userID) {
-        var map = new HashMap<String, Object>();
         var user = userService.getUserByID(userID);
-        if (user == null)
-            return ApiResponse.errorResponse("Utilisateur inexistant", 404);
-
+        var map = new HashMap<String, Object>();
         map.put("user", user);
-        return ApiResponse.successResponse("Utilisateur trouvé", map);
+        
+        return user == null 
+            ? ApiResponse.errorResponse("Utilisateur inexistant", 404)
+            : ApiResponse.successResponse("Utilisateur trouvé", map);
     }
 
     @PostMapping("/login")
@@ -89,7 +89,7 @@ public class UserController {
             .password(userRequest.getPassword())
             .firstname(userRequest.getFirstname())
             .lastname(userRequest.getLastname())
-            .DOB(userRequest.getDOB())
+            .birthdate(userRequest.getBirthdate())
             .build();
 
         var newUser = userService.createUser(user);
