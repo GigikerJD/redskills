@@ -2,10 +2,12 @@ package com.project.core;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.mongodb.config.EnableMongoAuditing;
 
 import io.github.cdimascio.dotenv.Dotenv;
 
 @SpringBootApplication
+@EnableMongoAuditing
 public class BackendApplication {
 
 	public static void main(String[] args) {

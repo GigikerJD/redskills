@@ -1,6 +1,8 @@
 package com.project.core.services;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -52,9 +54,12 @@ public class UserService {
 
     public String login(String email, String password){
         var user = getUserByEmail(email);
-        if (user == null) return "Utilisateur inexistant !";
-
-        var isPasswordCorrect = passwordEncoder.matches(password, user.getPassword());
-        return isPasswordCorrect ? "Connexion réussie" : "Mot de passe incorrect";
+        Map<Boolean, String> strategies = Map.of(
+            true, "Connexion réussie", 
+            false, "Mot de passe incorrect"
+        );
+        return Optional.ofNullable(user)
+            .map(u -> strategies.get(passwordEncoder.matches(password, u.getPassword())))
+            .orElse("Utilisateur inexistant !");
     }
 }
