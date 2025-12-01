@@ -3,9 +3,10 @@
     import DashboardHeader from './headers/DashboardHeader.vue';
     import DefaultFooter from './footers/DefaultFooter.vue';
     import DefaultHeader from './headers/DefaultHeader.vue';
-    import { inject, type Ref } from 'vue';
+    import { useAppStore } from '../config/RedSkillProvider';
 
-    const isLogged = inject<Ref<boolean>>('isLogged')
+    const appStore = useAppStore();
+    const isLogged = appStore.getIsLogged;
 </script>
 
 <template>

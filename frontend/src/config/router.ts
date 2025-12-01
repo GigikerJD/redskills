@@ -1,5 +1,5 @@
-import Cookies from "universal-cookie";
 import { createRouter, createWebHistory, type RouteRecordRaw } from "vue-router";
+import { useAppStore } from "./RedSkillProvider";
 
 const routes: RouteRecordRaw[] = [
   {
@@ -43,14 +43,13 @@ const routes: RouteRecordRaw[] = [
 const router = createRouter({ history: createWebHistory(), routes });
 
 router.beforeEach((to, _, next) => {
-  const cookies = new Cookies()
-  const isLogged = cookies.get('isLogged')
+  const appStore = useAppStore();
 
   document.title = to.meta.title as string
   
-  if (to.meta.requiresAuth && !isLogged) {
+  if (to.meta.requiresAuth && !appStore.getIsLogged) {
     next('/forms')
-  } else if ((to.path === '/forms' || to.path === '/') && isLogged) {
+  } else if ((to.path === '/forms' || to.path === '/') && appStore.getIsLogged) {
     next('/dashboard')
   } else {
     next()
