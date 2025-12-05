@@ -102,6 +102,7 @@ public class UserController {
     @PutMapping("/mutate/${user_id}")
     public ResponseEntity<?> updateUser(@PathVariable String user_id, @RequestParam String property, @RequestParam String value){
         User user = userService.getUserByID(user_id);
+        if (user == null) return ApiResponse.errorResponse("Utilisateur inexistant", 404);
         switch (property){
             case "email" -> {
                 user.setEmail(value);
