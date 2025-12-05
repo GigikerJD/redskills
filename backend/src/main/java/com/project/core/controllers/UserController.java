@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -96,6 +97,38 @@ public class UserController {
         String generatedToken = jwtService.generateToken(newUser.getId(), newUser.getEmail());
         map.putAll(Map.of("token", generatedToken, "userID", newUser.getId()));
         return ApiResponse.successResponse("Votre compte a été créé", 201, map);
+    }
+
+    @PutMapping("/mutate/${user_id}")
+    public ResponseEntity<?> updateUser(@PathVariable String user_id, @RequestParam String property, @RequestParam String value){
+        User user = userService.getUserByID(user_id);
+        switch (property){
+            case "email" -> {
+                user.setEmail(value);
+                userService.saveUser(user);
+                return ApiResponse.successResponse("Votre email a été modifié avec succès");
+            }
+            case "password" -> {
+                userService.hashPasswordForUser(user, value);
+                return ApiResponse.successResponse("Votre mot de passe a été modifié avec succès");
+            }
+            case "firstname" -> {
+                user.setFirstname(value);
+                userService.saveUser(user);
+                return ApiResponse.successResponse("Votre prénom a été modifié avec succès");
+            }
+            case "lastname" -> {
+                user.setLastname(value);
+                userService.saveUser(user);
+                return ApiResponse.successResponse("Votre nom de famille a été modifié avec succès");
+            }
+            case "birthdate" -> {
+                return ApiResponse.successResponse("Votre date de naissance a été modifié avec succès");
+            }
+            default -> {
+                return ApiResponse.errorResponse("Propriété inconnue...", 400);
+            }
+        }
     }
 
     @DeleteMapping("/delete")
