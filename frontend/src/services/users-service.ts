@@ -1,6 +1,6 @@
 import axios from "axios"
 import type { LoginModel, RegisterModel } from "../models/FormsModel";
-import type { DeleteProfileResponse, LoginResponse, RegisterResponse, UpdateProfileResponse, UserDataResponse } from "../models/ApiModel";
+import type { DeleteProfileResponse, LoginResponse, LoginResponseError, RegisterResponse, RegisterResponseError, RegisterResponseSuccess, UpdateProfileResponse, UserDataResponse } from "../models/ApiModel";
 
 const API_BASE = import.meta.env.VITE_USERS_API_URL;
 const API_LOGIN = import.meta.env.VITE_USERS_API_LOGIN_URL;
@@ -16,26 +16,26 @@ export const loginRequest = async (loginModelBody: LoginModel): Promise<LoginRes
             validateStatus: () => true
         });
     let loginResponse: LoginResponse;
-    switch (response.status){
-        case 200:
-            loginResponse = {
-                status: response.status,
-                data: {
-                    type: response.data.type,
-                    message: response.data.message,
-                    userID: response.data.userID
-                }
+    if (response.status === 200){
+        loginResponse = {
+            status: response.status,
+            data: {
+                type: response.data.type,
+                message: response.data.message,
+                userID: response.data.userID
             }
-            return loginResponse;
-        default:
-            loginResponse = {
-                status: response.status,
-                data: {
-                    type: response.data.type,
-                    message: response.data.message
-                }
-            }
-            throw loginResponse;
+        }
+        return loginResponse;
+    } else {
+        const myData: LoginResponseError = {
+            type: response.data.type,
+            message: response.data.type,
+        }
+        loginResponse = {
+            status: response.status,
+            data: myData
+        }
+        throw loginResponse;
     }
 }
 export const registerRequest = async (registerModelBody: RegisterModel): Promise<RegisterResponse> => {
@@ -50,60 +50,60 @@ export const registerRequest = async (registerModelBody: RegisterModel): Promise
             validateStatus: () => true
         })
     let registerResponse: RegisterResponse;
-    switch (response.status) {
-        case 200:
-            registerResponse = {
-                status: response.status,
-                data: {
-                    type: response.data.type,
-                    message: response.data.type,
-                    token: response.data.token,
-                    userID: response.data.userID
-                }
-            }
-            return registerResponse;
-        default:
-            registerResponse = {
-                status: response.status,
-                data: {
-                    type: response.data.type,
-                    message: response.data.type
-                }
-            }
-            throw registerResponse
+    let myData: RegisterResponseSuccess | RegisterResponseError;
+    if (response.status === 200) {
+        myData = {
+            type: response.data.type,
+            message: response.data.message,
+            token: response.data.token,
+            userID: response.data.userID
+        }
+        registerResponse = {
+            status: response.status,
+            data: myData
+        }
+        return registerResponse;
+    } else {
+        myData = {
+            type: response.data.type,
+            message: response.data.type
+        }
+        registerResponse = {
+            status: response.status,
+            data: myData
+        }
+        throw registerResponse
     }
 }   
 export const userData = async (user_id: string): Promise<UserDataResponse> => {
     const response = await axios.get(`${API_BASE}/${user_id}`, { validateStatus: () => true });
     let dataResponse: UserDataResponse;
-    switch (response.status) {
-        case 200:
-            dataResponse = {
-                type: response.data.type,
-                status: response.status,
-                message: response.data.message,
-                user: {
-                    id: response.data.user.id,
-                    email: response.data.user.email,
-                    firstname: response.data.user.firstname,
-                    lastname: response.data.user.lastname,
-                    birthdate: new Date(response.data.user.birthdate),
-                    status: response.data.user.status,
-                    createdAt: new Date(response.data.user.createdAt),
-                    updatedAt: new Date(response.data.user.updatedAt)
-                }
+    if (response.status === 200) {
+        dataResponse = {
+            type: response.data.type,
+            status: response.status,
+            message: response.data.message,
+            user: {
+                id: response.data.user.id,
+                email: response.data.user.email,
+                firstname: response.data.user.firstname,
+                lastname: response.data.user.lastname,
+                birthdate: new Date(response.data.user.birthdate),
+                createdAt: new Date(response.data.user.createdAt),
+                updatedAt: new Date(response.data.user.updatedAt)
             }
-            return dataResponse;
-        default:
-            dataResponse = {
-                type: response.data.type,
-                message: response.data.message,
-                status: response.status,
-            }
-            throw dataResponse;
+        }
+        return dataResponse;
+    } else {
+        dataResponse = {
+            type: response.data.type,
+            message: response.data.message,
+            status: response.status,
+        }
+        throw dataResponse;
     }
 }
-export const updateProfile: any = async (user_id: string, property: string, value: string|Date|number): Promise<UpdateProfileResponse> => {
+export const updateProfile: any = async (user_id: string, property: string, value: string): Promise<UpdateProfileResponse> => {
     const response = await axios.put(`${API_BASE}/${user_id}`, null, {
         params: { property: property, value: value },
         validateStatus: () => true
@@ -113,7 +113,7 @@ export const updateProfile: any = async (user_id: string, property: string, valu
         type: response.data.type,
         message: response.data.message,
     }
-    if (updatedProfileResponse.status === 200) return updatedProfileResponse;
+    if (response.status === 200) return updatedProfileResponse;
     else throw updatedProfileResponse;
 }
 export const deleteProfile: any = async (user_id: string): Promise<DeleteProfileResponse> => {
@@ -123,8 +123,8 @@ export const deleteProfile: any = async (user_id: string): Promise<DeleteProfile
             validateStatus: () => true
         });
     const deletedProfileResponse: DeleteProfileResponse = {
-        status: response.status, message: response.data.message
+        type: response.data.type, status: response.status, message: response.data.message
     };
-    if (deletedProfileResponse.status == 200) return deletedProfileResponse;
+    if (response.status === 200) return deletedProfileResponse;
     else throw deletedProfileResponse;
 }

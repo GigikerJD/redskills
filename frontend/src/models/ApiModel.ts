@@ -40,13 +40,14 @@ export interface UpdateProfileResponse {
 }
 
 export interface DeleteProfileResponse {
+    type: string,
     status: number,
     message: string
 }
 
 export interface UserDataResponse {
-    status: number,
     type: string,
+    status: number,
     message: string,
     user?: User | null
 }
