@@ -33,14 +33,14 @@ export const useAppStore = defineStore('appStore', {
             });
             this.userID = user_id;
             this.isLogged = true;
-            setTimeout(() => { router.push('/dashboard') }, 500);
+            setTimeout(() => { router.push('/dashboard') }, 1000);
         },
         logout(): void {
             cookies.remove('userID');
             cookies.remove('isLogged');
             this.userID = '';
             this.isLogged = false;
-            setTimeout(() => { router.push('/') }, 500);
+            setTimeout(() => { router.push('/') }, 1000);
         },
     }
 })
