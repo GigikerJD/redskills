@@ -10,8 +10,9 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.17",
-    "@tanstack/vue-query": "^5.92.0",
+    "@tanstack/vue-query": "^5.92.1",
     "axios": "^1.13.2",
+    "notivue": "^2.4.5",
     "pinia": "^3.0.4",
     "tailwindcss": "^4.1.17",
     "universal-cookie": "^8.0.1",
