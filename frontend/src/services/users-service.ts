@@ -16,26 +16,25 @@ export const loginRequest = async (loginModelBody: LoginModel): Promise<LoginRes
             validateStatus: () => true
         });
     let loginResponse: LoginResponse;
-    switch (response.status){
-        case 200:
-            loginResponse = {
-                status: response.status,
-                data: {
-                    type: response.data.type,
-                    message: response.data.message,
-                    userID: response.data.userID
-                }
+    if (response.status == 200) {
+        loginResponse = {
+            status: response.status,
+            data: {
+                type: response.data.type,
+                message: response.data.message,
+                userID: response.data.userID
             }
-            return loginResponse;
-        default:
-            loginResponse = {
-                status: response.status,
-                data: {
-                    type: response.data.type,
-                    message: response.data.message
-                }
+        }
+        return loginResponse;
+    } else {
+        loginResponse = {
+            status: response.status,
+            data: {
+                type: response.data.type,
+                message: response.data.message
             }
-            throw loginResponse;
+        }
+        throw loginResponse;
     }
 }
 export const registerRequest = async (registerModelBody: RegisterModel): Promise<RegisterResponse> => {
@@ -50,57 +49,55 @@ export const registerRequest = async (registerModelBody: RegisterModel): Promise
             validateStatus: () => true
         })
     let registerResponse: RegisterResponse;
-    switch (response.status) {
-        case 200:
-            registerResponse = {
-                status: response.status,
-                data: {
-                    type: response.data.type,
-                    message: response.data.type,
-                    token: response.data.token,
-                    userID: response.data.userID
-                }
+    if (response.status == 200) {
+        registerResponse = {
+            status: response.status,
+            data: {
+                type: response.data.type,
+                message: response.data.type,
+                token: response.data.token,
+                userID: response.data.userID
             }
-            return registerResponse;
-        default:
-            registerResponse = {
-                status: response.status,
-                data: {
-                    type: response.data.type,
-                    message: response.data.type
-                }
+        }
+        return registerResponse;
+    } else {
+        registerResponse = {
+            status: response.status,
+            data: {
+                type: response.data.type,
+                message: response.data.type
             }
-            throw registerResponse
+        }
+        throw registerResponse;
     }
 }   
 export const userData = async (user_id: string): Promise<UserDataResponse> => {
     const response = await axios.get(`${API_BASE}/${user_id}`, { validateStatus: () => true });
     let dataResponse: UserDataResponse;
-    switch (response.status) {
-        case 200:
-            dataResponse = {
-                type: response.data.type,
-                status: response.status,
-                message: response.data.message,
-                user: {
-                    id: response.data.user.id,
-                    email: response.data.user.email,
-                    firstname: response.data.user.firstname,
-                    lastname: response.data.user.lastname,
-                    birthdate: new Date(response.data.user.birthdate),
-                    status: response.data.user.status,
-                    createdAt: new Date(response.data.user.createdAt),
-                    updatedAt: new Date(response.data.user.updatedAt)
-                }
+    if (response.status == 200) {
+        dataResponse = {
+            type: response.data.type,
+            status: response.status,
+            message: response.data.message,
+            user: {
+                id: response.data.user.id,
+                email: response.data.user.email,
+                firstname: response.data.user.firstname,
+                lastname: response.data.user.lastname,
+                birthdate: new Date(response.data.user.birthdate),
+                status: response.data.user.status,
+                createdAt: new Date(response.data.user.createdAt),
+                updatedAt: new Date(response.data.user.updatedAt)
             }
-            return dataResponse;
-        default:
-            dataResponse = {
-                type: response.data.type,
-                message: response.data.message,
-                status: response.status,
-            }
-            throw dataResponse;
+        }
+        return dataResponse;
+    } else {
+        dataResponse = {
+            type: response.data.type,
+            message: response.data.message,
+            status: response.status,
+        }
+        throw dataResponse;
     }
 }
 export const updateProfile: any = async (user_id: string, property: string, value: string|Date|number): Promise<UpdateProfileResponse> => {
