@@ -37,6 +37,16 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public User saveUser(User user){
+        return userRepository.save(user);
+    }
+
+    public void hashPasswordForUser(User user, String rawPassword){
+        var hashPassword = passwordEncoder.encode(rawPassword);
+        user.setPassword(hashPassword);
+        userRepository.save(user);
+    }
+
     public void deleteUser(User user){
         userRepository.delete(user);
     }

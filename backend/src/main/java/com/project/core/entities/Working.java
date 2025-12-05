@@ -6,44 +6,30 @@ import java.time.LocalDateTime;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
-
-import com.mongodb.lang.NonNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(collection = "users")
-public class User {
+@Document(collection = "working")
+public class Working {
 
     @Id
     private String id;
 
-    @Field(name = "firstname")
-    private String firstname;
+    @Field(name = "startDate")
+    private LocalDate startDate;
 
-    @Field(name = "lastname")
-    private String lastname;
-
-    @Field(name = "email")
-    @Indexed(unique = true)
-    @NonNull
-    private String email;
-
-    @Field(name = "password")
-    @NonNull
-    private String password;
-
-    @Field(name = "birthdate")
-    private LocalDate birthdate;
+    @Field(name = "endDate")
+    private LocalDate endDate;
 
     @CreatedDate
     @Field(name = "created_at")
