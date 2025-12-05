@@ -5,8 +5,11 @@
 </script>
 
 <template>
-    <h4>Page Home</h4>
-    <button @click="router.push('/forms')">
+    <h4 class="text-center">Page Home</h4>
+    <button 
+        @click="router.push('/forms')"
+        class="flex justify-self-center"
+    >
         Aller à la page Login
     </button>
 </template>
