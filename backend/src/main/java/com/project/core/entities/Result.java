@@ -25,6 +25,10 @@ public class Result {
     @Id
     private String id;
 
+    @Field(name="user_id")
+    @NonNull
+    private String userId;
+
     @Field(name="date_result")
     @NonNull
     private LocalDateTime dateResult;

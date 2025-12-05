@@ -25,13 +25,13 @@ public class Working {
     @Id
     private String id;
 
-    @Field(name="id_user")
+    @Field(name="user_id")
     @NonNull
-    private String idUser;
+    private String userId;
 
-    @Field(name="id_status")
+    @Field(name="status_id")
     @NonNull
-    private String idStatus;
+    private String statusId;
 
     @Field(name="date_start")
     @NonNull
