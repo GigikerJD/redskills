@@ -8,7 +8,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.project.core.entities.User;
+import com.project.core.entities.Result;
 import com.project.core.repositories.UserRepository;
+import com.project.core.repositories.ResultRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -17,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final ResultRepository resultRepository;
     private final PasswordEncoder passwordEncoder;
 
     public List<User> getUsers(){
@@ -29,6 +32,14 @@ public class UserService {
     
     public User getUserByEmail(String email){
         return userRepository.findByEmail(email).orElse(null);
+    }
+
+    public User getUserByResult(String resultId){
+        var result = resultRepository.findById(resultId).orElse(null);
+        if(result == null)
+            return null;
+        var userId = result.getUserId();
+        return getUserByID(userId);
     }
 
     public User createUser(User user){
