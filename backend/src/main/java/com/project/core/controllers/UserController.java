@@ -1,5 +1,6 @@
 package com.project.core.controllers;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -124,6 +125,8 @@ public class UserController {
                 return ApiResponse.successResponse("Votre nom de famille a été modifié avec succès");
             }
             case "birthdate" -> {
+                user.setBirthdate(LocalDate.parse(value));
+                userService.saveUser(user);
                 return ApiResponse.successResponse("Votre date de naissance a été modifié avec succès");
             }
             default -> {
