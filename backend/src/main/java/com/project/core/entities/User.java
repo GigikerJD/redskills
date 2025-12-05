@@ -45,9 +45,6 @@ public class User {
     @Field(name="birthdate")
     private LocalDate birthdate;
 
-    @Field(name="status")
-    private String status;
-
     @CreatedDate
     @Field(name="created_at")
     private LocalDateTime createdAt;
