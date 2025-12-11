@@ -3,8 +3,10 @@
 </script>
 
 <template>
-    <header>
-        Header default
+    <header class="text-base">
+        <div class="mx-2 my-4">
+            <span class="">Mon header par défaut</span>
+        </div>
     </header>
 </template>
 
