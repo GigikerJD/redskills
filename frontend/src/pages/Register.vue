@@ -70,10 +70,10 @@ onMounted(() => {
         </Notification>
     </Notivue>
 
-    <div class="w-[90%] max-w-[525px] mx-auto flex justify-end">
+    <div class="w-[80%] max-w-[525px] mx-auto flex justify-end">
         <button
             @click="router.push('/')"
-            class="flex my-4 rounded-md bg-emerald-400 text-sm font-[Poppins] px-6 py-1.5 cursor-pointer shadow-2xl hover:opacity-90"
+            class="flex my-4 rounded-md bg-emerald-400 text-sm  px-6 py-1.5 cursor-pointer shadow-2xl hover:opacity-90"
         >
             Retour
         </button>
@@ -83,11 +83,11 @@ onMounted(() => {
         <form
             id="signup-form"
             @submit="handleRegister"
-            class="w-[90%] sm:max-w-[525px] flex flex-col justify-self-center gap-y-6 rounded-3xl shadow-2xl p-4 sm:p-10 mt-1 mb-10 inset-8 inset-shadow-sm"
+            class="w-[80%] sm:max-w-[525px] flex flex-col justify-self-center gap-y-3 sm:gap-y-6 rounded-3xl shadow-2xl p-4 sm:p-10 mt-1 mb-10 inset-8 inset-shadow-sm"
         >
-            <h3 class="text-center text-3xl sm:text-5xl font-[Poppins] font-bold tracking-tight">Inscrivez-vous en un clic !</h3>
+            <h3 class="text-center text-3xl sm:text-5xl font-bold tracking-tight">Inscrivez-vous en un clic !</h3>
 
-            <div class="flex flex-col sm:flex-row sm:justify-between gap-y-6 sm:gap-y-0 gap-x-4">
+            <div class="flex flex-col sm:flex-row sm:justify-between gap-y-3 sm:gap-y-6 gap-x-4">
                 <label 
                     for="firstname-signup-input" 
                     class="flex flex-col relative grow sm:w-2/5"
@@ -97,10 +97,10 @@ onMounted(() => {
                         id="firstname-signup-input"
                         placeholder="Votre prénom"
                         v-model="registerForm.firstname"
-                        class="border border-neutral-300 rounded-xl px-3 sm:px-4 pt-7 pb-2 focus:outline-none font-[Poppins] "
+                        class="border border-neutral-300 rounded-xl px-3 sm:px-4 pt-7 pb-2 focus:outline-none "
                     >
                     <div class="absolute left-4 top-1 sm:left-4.5 sm:top-2">
-                        <span class="text-xs font-[Poppins]">Prénom</span>
+                        <span class="text-xs">Prénom</span>
                     </div>
                 </label>
                 <label 
@@ -112,10 +112,10 @@ onMounted(() => {
                         id="lastname-signup-input"
                         placeholder="Votre nom de famille"
                         v-model="registerForm.lastname"
-                        class="border border-neutral-300 rounded-xl px-3 sm:px-4 pt-7 pb-2 focus:outline-none font-[Poppins]"
+                        class="border border-neutral-300 rounded-xl px-3 sm:px-4 pt-7 pb-2 focus:outline-none "
                     >
                     <div class="absolute left-4 top-1 sm:left-4.5 sm:top-2">
-                        <span class="text-xs font-[Poppins]">Nom de famille</span>
+                        <span class="text-xs">Nom de famille</span>
                     </div>
                 </label>
             </div>
@@ -129,10 +129,10 @@ onMounted(() => {
                     id="email-signup-input"
                     placeholder="example@mail.com"
                     v-model="registerForm.email"
-                    class="border border-neutral-300 rounded-xl px-3 sm:px-4 pt-7 pb-2 focus:outline-none font-[Poppins]"
+                    class="border border-neutral-300 rounded-xl px-3 sm:px-4 pt-7 pb-2 focus:outline-none"
                 >
                 <div class="absolute left-4 top-1 sm:left-4.5 sm:top-2">
-                    <span class="text-xs font-[Poppins]">Email</span>
+                    <span class="text-xs">Email</span>
                 </div>
             </label>
 
@@ -143,12 +143,12 @@ onMounted(() => {
                 <input 
                     type="password"
                     id="password-signup-input"
-                    placeholder="*************************************"
+                    placeholder="Tapez votre mot de passe"
                     v-model="registerForm.password"
-                    class="border border-neutral-300 rounded-xl px-3 sm:px-4 pt-7 pb-2 focus:outline-none font-[Poppins]"
+                    class="border border-neutral-300 rounded-xl px-3 sm:px-4 pt-7 pb-2 focus:outline-none placeholder:italic"
                 >
                 <div class="absolute left-4 top-1 sm:left-4.5 sm:top-2">
-                    <span class="text-xs font-[Poppins]">Mot de passe</span>
+                    <span class="text-xs">Mot de passe</span>
                 </div>
             </label>
 
@@ -159,12 +159,12 @@ onMounted(() => {
                 <input 
                     type="password"
                     id="confirm-password-signup-input"
-                    placeholder="*************************************"
+                    placeholder="Tapez à nouveau votre mot de passe"
                     v-model="confirmPassword"
-                    class="border border-neutral-300 rounded-xl px-3 sm:px-4 pt-7 pb-2 focus:outline-none font-[Poppins]"
+                    class="border border-neutral-300 rounded-xl px-3 sm:px-4 pt-7 pb-2 focus:outline-none placeholder:italic"
                 >
                 <div class="absolute left-4 top-1 sm:left-4.5 sm:top-2">
-                    <span class="text-xs font-[Poppins]">Confirmer le mot de passe</span>
+                    <span class="text-xs">Confirmer le mot de passe</span>
                 </div>
             </label>
 
@@ -176,16 +176,16 @@ onMounted(() => {
                     type="date"
                     id="birthdate-signup-input"
                     v-model="registerForm.birthdate"
-                    class="border border-neutral-300 rounded-xl px-3 sm:px-4 pt-7 pb-2 focus:outline-none font-[Poppins]"
+                    class="border border-neutral-300 rounded-xl px-3 sm:px-4 pt-7 pb-2 focus:outline-none"
                 >
                 <div class="absolute left-4 top-1 sm:left-4.5 sm:top-2">
-                    <span class="text-xs font-[Poppins]">Date de naissance</span>
+                    <span class="text-xs">Date de naissance</span>
                 </div>
             </label>
 
             <button 
                 type="submit"
-                class="rounded-xl bg-emerald-400 py-1.5 mx-1 text-sm font-[Poppins] tracking-tight cursor-pointer hover:opacity-90"
+                class="rounded-xl bg-emerald-400 py-1.5 mx-1 text-sm tracking-tight cursor-pointer hover:opacity-90"
             >
                 S'inscrire
             </button>

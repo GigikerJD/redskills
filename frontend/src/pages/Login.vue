@@ -51,7 +51,7 @@ onMounted(() => {
     <div class="w-[90%] max-w-[500px] mx-auto flex justify-end">
         <button
             @click="router.push('/')"
-            class="flex my-4 rounded-md bg-emerald-400 text-sm font-[Poppins] px-6 py-1.5 cursor-pointer shadow-2xl hover:opacity-90"
+            class="flex my-4 rounded-md bg-emerald-400 text-sm px-6 py-1.5 cursor-pointer shadow-2xl hover:opacity-90"
         >
             Retour
         </button>
@@ -62,7 +62,7 @@ onMounted(() => {
         @submit.prevent="handleLogin"
         class="w-[90%] sm:max-w-[500px] flex flex-col justify-self-center gap-y-6 rounded-3xl shadow-2xl p-4 sm:p-10 my-10 inset-8 inset-shadow-sm"
     >
-        <h3 class="text-center text-3xl sm:text-5xl font-[Poppins] font-bold tracking-tight">Connexion</h3>
+        <h3 class="text-center text-3xl sm:text-5xl font-bold tracking-tight">Connexion</h3>
         <label 
             for="email-signin-input"
             class="flex flex-col relative grow p-1"
@@ -72,10 +72,10 @@ onMounted(() => {
                 id="email-signin-input"
                 v-model="loginForm.email"
                 placeholder="example@mail.com"
-                class="border border-neutral-300 rounded-xl px-3 sm:px-4 pt-7 pb-2 focus:outline-none font-[Poppins]"
+                class="border border-neutral-300 rounded-xl px-3 sm:px-4 pt-7 pb-2 focus:outline-none"
             >
             <div class="absolute left-4 top-1 sm:left-4.5 sm:top-2">
-                <span class="text-xs font-[Poppins]">Adresse email</span>
+                <span class="text-xs ">Adresse email</span>
             </div>
         </label>
         <label 
@@ -87,15 +87,15 @@ onMounted(() => {
                 id="password-signin-input"
                 v-model="loginForm.password"
                 placeholder="*********************"
-                class="border border-neutral-300 rounded-xl px-3 sm:px-4 pt-7 pb-2 focus:outline-none font-[Poppins]"
+                class="border border-neutral-300 rounded-xl px-3 sm:px-4 pt-7 pb-2 focus:outline-none"
             >
             <div class="absolute left-4 top-1 sm:left-4.5 sm:top-2">
-                <span class="text-xs font-[Poppins]">Mot de passe</span>
+                <span class="text-xs ">Mot de passe</span>
             </div>
         </label>
         <button 
             type="submit"
-            class="rounded-xl bg-emerald-400 py-1.5 mx-1 text-sm font-[Poppins] tracking-tight cursor-pointer hover:opacity-90"
+            class="rounded-xl bg-emerald-400 py-1.5 mx-1 text-sm tracking-tight cursor-pointer hover:opacity-90"
             :disabled="isLoading"
         >
             {{ isLoading ? "Connexion..." : "Se connecter" }}
