@@ -9,7 +9,7 @@ import { darkTheme, Notification, NotificationProgress, Notivue, push, useNotivu
 const router = useRouter();
 const appStore = useAppStore();
 const notifConfig = useNotivue();
-const changePasswordType = ref<'password' | 'text'>('password');
+const inputType = ref<'password' | 'text'>('password');
 const isLoading = ref<boolean>(false);
 const loginForm = ref<LoginModel>({ email: '', password: '' });
 
@@ -47,64 +47,58 @@ onMounted(() => {
             <NotificationProgress :item="item"/>
         </Notification>
     </Notivue>
-    <div class="size-full flex flex-col justify-center items-center">
-        <form
-            id="login-form"
-            @submit="handleLogin"
-            class="my-6 px-10 py-4 w-[80%] sm:max-w-[500px] flex flex-col rounded-3xl shadow-xl shadow-cyan-300 inset-shadow-2xl ring grayscale-50"
-        >
-            <h3 class="font-bold text-center text-base font-[Roboto]">Connexion</h3>
-
-            <div class="flex flex-col my-5 gap-y-3 relative">
-                <label 
-                    for="email-signin-input"
-                    class="text-sm text-shadow-sm font-[Roboto]"
-                >
-                    Email
-                </label>
-                <input 
-                    type="email"
-                    id="email-signin-input"
-                    placeholder="example@mail.com"
-                    class="border border-emerald-700 rounded-3xl text-base py-1.5 px-5 focus:outline-none"
-                    v-model="loginForm.email"
-                >
-            </div>
-
-            <div class="flex flex-col my-5 gap-y-3 relative">
-                <label 
-                    for="password-signin-input"
-                    class="text-sm text-shadow-sm font-[Roboto]"
-                >
-                    Mot de passe
-                </label>
-                <input 
-                    :type="changePasswordType"
-                    id="password-signin-input"
-                    placeholder="***********************"
-                    class="border border-emerald-700 rounded-3xl text-base py-1.5 px-5 focus:outline-none"
-                    v-model="loginForm.password"
-                >
-            </div>
-
-            <button 
-                type="submit"
-                class="py-1.75 px-6 my-4 w-fit mx-auto rounded-3xl text-base text-white font-[Roboto] bg-cyan-700"
-            >
-                {{ isLoading ? "Connexion..." : "Se connecter" }}
-            </button>
-        </form>
-
+   
+    <div class="w-[90%] max-w-[500px] mx-auto flex justify-end">
         <button
             @click="router.push('/')"
-            class="flex justify-self-center my-6 rounded-4xl bg-purple-700 text-base font-[Roboto] px-3 py-2 text-white font-semibold cursor-pointer"
-            :disabled="isLoading"
+            class="flex my-4 rounded-md bg-emerald-400 text-sm font-[Poppins] px-6 py-1.5 cursor-pointer shadow-2xl hover:opacity-90"
         >
-            Revenir en arrière
+            Retour
         </button>
     </div>
+    
+    <form
+        id="login-form"
+        @submit.prevent="handleLogin"
+        class="w-[90%] sm:max-w-[500px] flex flex-col justify-self-center gap-y-6 rounded-3xl shadow-2xl p-4 sm:p-10 my-10 inset-8 inset-shadow-sm"
+    >
+        <h3 class="text-center text-3xl sm:text-5xl font-[Poppins] font-bold tracking-tight">Connexion</h3>
+        <label 
+            for="email-signin-input"
+            class="flex flex-col relative grow p-1"
+        >
+            <input 
+                type="email" 
+                id="email-signin-input"
+                v-model="loginForm.email"
+                placeholder="example@mail.com"
+                class="border border-neutral-300 rounded-xl px-3 sm:px-4 pt-7 pb-2 focus:outline-none font-[Poppins]"
+            >
+            <div class="absolute left-4 top-1 sm:left-4.5 sm:top-2">
+                <span class="text-xs font-[Poppins]">Adresse email</span>
+            </div>
+        </label>
+        <label 
+            for="password-signin-input"
+            class="flex flex-col relative grow p-1"
+        >
+            <input 
+                :type="inputType"
+                id="password-signin-input"
+                v-model="loginForm.password"
+                placeholder="*********************"
+                class="border border-neutral-300 rounded-xl px-3 sm:px-4 pt-7 pb-2 focus:outline-none font-[Poppins]"
+            >
+            <div class="absolute left-4 top-1 sm:left-4.5 sm:top-2">
+                <span class="text-xs font-[Poppins]">Mot de passe</span>
+            </div>
+        </label>
+        <button 
+            type="submit"
+            class="rounded-xl bg-emerald-400 py-1.5 mx-1 text-sm font-[Poppins] tracking-tight cursor-pointer hover:opacity-90"
+            :disabled="isLoading"
+        >
+            {{ isLoading ? "Connexion..." : "Se connecter" }}
+        </button>
+    </form>
 </template>
-
-<style>
-
-</style>

@@ -9,5 +9,5 @@ export interface RegisterModel {
     password: string,
     firstname: string,
     lastname: string,
-    birthdate: '',
+    birthdate: string,
 }

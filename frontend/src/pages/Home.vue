@@ -3,20 +3,6 @@ import { useRouter } from 'vue-router';
 
 const router = useRouter();
 
-function changeTheme() {
-    if (localStorage.getItem('theme') === null) {
-        setTimeout(() => {
-            localStorage.setItem('theme', 'dark');
-            document.documentElement.classList.add('dark');
-        }, 100);
-    } else {
-        setTimeout(() => {
-            localStorage.removeItem('theme');
-            document.documentElement.classList.remove('dark');
-        }, 100);
-    }
-}
-
 </script>
 
 <template>
@@ -27,14 +13,10 @@ function changeTheme() {
     >
         Aller à la page Login
     </button>
-
-    <div class="max-w-7xl mx-auto py-2 px-5 dark:bg-stone-800 mt-6 rounded-3xl">
-        <span class="dark:text-white">Bonjour je vais changer de couleur</span>
-    </div>
-    <button 
-        v-on:click="changeTheme"
-        class="flex justify-self-center mt-6 bg-fuchsia-700 rounded-3xl py-2 px-3 text-white text-base cursor-pointer"
+    <button
+        @click="router.push('/signup')"
+        class="flex justify-self-center cursor-pointer outline-none rounded-[10px] px-2.5 py-1.5 mx-auto bg-blue-200 hover:bg-blue-700 hover:text-white text-base font-semibold font-[Roboto]"
     >
-        Je peux modifier le thème
+        Aller à la page Création de compte
     </button>
 </template>
