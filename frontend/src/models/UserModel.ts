@@ -4,7 +4,7 @@ export interface User {
     email: string,
     firstname: string,
     lastname: string,
-    birthdate: Date,
-    createdAt: Date,
-    updatedAt: Date
+    birthdate: string,
+    createdAt: string,
+    updatedAt: string
 }

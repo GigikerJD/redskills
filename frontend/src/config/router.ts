@@ -13,10 +13,16 @@ const routes: RouteRecordRaw[] = [
         meta : { title: "Redskills - plateforme d'apprentissage de soft-skills" }
       },
       {
-        path: '/forms',
-        name: 'forms',
-        component: () => import("../pages/Forms.vue"),
-        meta: { title: "Connectez-vous ou enregistrez vous sur l'appli" }
+        path: '/signin',
+        name: 'signin',
+        component: () => import("../pages/Login.vue"),
+        meta : { title: "Connexion" }
+      },
+      {
+        path: '/signup',
+        name: 'signup',
+        component: () => import("../pages/Register.vue"),
+        meta : { title: "Création de compte" }
       },
       {
         path: '/dashboard',

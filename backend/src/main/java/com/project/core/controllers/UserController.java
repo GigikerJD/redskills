@@ -54,7 +54,7 @@ public class UserController {
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest){
         var map = new HashMap<String, Object>();
         var result = userService.login(loginRequest.getEmail(), loginRequest.getPassword());
-        switch (result){
+        switch (result) {
             case "Utilisateur inexistant !" -> {
                 return ApiResponse.errorResponse(result, 404);
             }
@@ -100,7 +100,7 @@ public class UserController {
         return ApiResponse.successResponse("Votre compte a été créé", 201, map);
     }
 
-    @PutMapping("/mutate/${user_id}")
+    @PutMapping("/mutate/{user_id}")
     public ResponseEntity<?> updateUser(@PathVariable String user_id, @RequestParam String property, @RequestParam String value){
         User user = userService.getUserByID(user_id);
         if (user == null) return ApiResponse.errorResponse("Utilisateur inexistant", 404);

@@ -6,16 +6,16 @@ const cookies = new Cookies();
 
 export const useAppStore = defineStore('appStore', {
     state: () => {
-        const userID_cookie: string | undefined = cookies.get('userID') || '';
-        const isLogged_cookie: boolean | undefined = cookies.get('isLogged') || false;
+        const userID_cookie: string = cookies.get('userID') || '';
+        const isLogged_cookie: boolean = cookies.get('isLogged') || false;
         return {
             userID: userID_cookie,
             isLogged: isLogged_cookie
         }
     },
     getters: {
-        getUserID: (state): string | undefined => state.userID,
-        getIsLogged: (state): boolean | undefined => state.isLogged
+        getUserID: (state): string => state.userID,
+        getIsLogged: (state): boolean => state.isLogged
     },
     actions: {
         login(user_id: string): void {
