@@ -1,5 +1,6 @@
 import { createApp } from 'vue'
-import './style.css'
+import './assets/css/style.css'
+import './assets/css/fonts.css'
 import 'notivue/notification.css' // Only needed if using built-in notifications
 import 'notivue/animations.css' // Only needed if using built-in animations
 import App from './App.vue'
