@@ -1,7 +1,24 @@
 <script setup lang="ts">
+import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
+
+const isDark = ref(false);
+
+onMounted(() => {
+    const savedTheme = localStorage.getItem('theme');
+    isDark.value = savedTheme === 'dark';
+    if (isDark.value) {
+        document.documentElement.classList.add('dark');
+    }
+});
+
+function toggleDarkMode() {
+    isDark.value = !isDark.value;
+    document.documentElement.classList.toggle('dark');
+    localStorage.setItem('theme', isDark.value ? 'dark' : 'light');
+}
 
 </script>
 
@@ -20,6 +37,19 @@ const router = useRouter();
         >
             Aller à la page Création de compte
         </button>
+    </div>
+
+    <button
+        @click="toggleDarkMode" 
+        class="cursor-pointer rounded-lg text-sm flex justify-self-center my-6 px-3.5 bg-gray-600 py-1.5 shadow-md hover:shadow-xl hover:bg-gray-800 transition-colors text-white"
+    >
+        Changer de mode
+    </button>
+
+    <div class="max-w-xl bg-red-200 dark:bg-red-700 dark:text-white 
+        text-center my-10 mx-auto p-2 rounded-xl 
+        shadow-2xl transition-all duration-300">
+        Mode dark
     </div>
 
 </template>

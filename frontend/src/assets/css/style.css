@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* sonar-disable-next-line */
+@custom-variant dark (&:where(.dark, .dark *));
+
 body {
   margin: 0;
   padding: 0;
