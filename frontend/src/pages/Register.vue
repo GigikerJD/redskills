@@ -73,7 +73,7 @@ onMounted(() => {
     <div class="w-[80%] max-w-[525px] mx-auto flex justify-end">
         <button
             @click="router.push('/')"
-            class="flex my-4 rounded-md bg-emerald-400 text-sm  px-6 py-1.5 cursor-pointer shadow-2xl hover:opacity-90"
+            class="flex my-4 rounded-md bg-emerald-400 text-sm px-6 py-1.5 cursor-pointer shadow-2xl hover:opacity-90"
         >
             Retour
         </button>
@@ -90,7 +90,7 @@ onMounted(() => {
             <div class="flex flex-col sm:flex-row sm:justify-between gap-y-3 sm:gap-y-6 gap-x-4">
                 <label 
                     for="firstname-signup-input" 
-                    class="flex flex-col relative grow sm:w-2/5"
+                    class="flex flex-col relative grow p-1 sm:w-2/5"
                 >
                     <input 
                         type="text"
@@ -105,7 +105,7 @@ onMounted(() => {
                 </label>
                 <label 
                     for="lastname-signup-input" 
-                    class="flex flex-col relative grow sm:w-2/5"
+                    class="flex flex-col relative grow p-1 sm:w-2/5"
                 >
                     <input 
                         type="text"
@@ -122,7 +122,7 @@ onMounted(() => {
 
             <label 
                 for="email-signup-input" 
-                class="flex flex-col relative grow"
+                class="flex flex-col relative grow p-1"
             >
                 <input 
                     type="email"
@@ -138,7 +138,7 @@ onMounted(() => {
 
             <label 
                 for="password-signup-input" 
-                class="flex flex-col relative grow"
+                class="flex flex-col relative grow p-1"
             >
                 <input 
                     type="password"
@@ -154,7 +154,7 @@ onMounted(() => {
 
             <label 
                 for="confirm-password-signup-input" 
-                class="flex flex-col relative grow"
+                class="flex flex-col relative grow p-1"
             >
                 <input 
                     type="password"
@@ -170,7 +170,7 @@ onMounted(() => {
 
             <label 
                 for="birthdate-signup-input" 
-                class="flex flex-col relative grow"
+                class="flex flex-col relative grow p-1"
             >
                 <input 
                     type="date"

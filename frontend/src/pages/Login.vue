@@ -5,6 +5,7 @@ import type { LoginModel } from '../models/FormsModel';
 import { useAppStore } from '../config/RedSkillProvider';
 import { loginRequest } from '../services/users-service';
 import { darkTheme, Notification, NotificationProgress, Notivue, push, useNotivue } from 'notivue';
+import { motion } from 'motion-v';
 
 const router = useRouter();
 const appStore = useAppStore();
@@ -12,7 +13,6 @@ const notifConfig = useNotivue();
 const inputType = ref<'password' | 'text'>('password');
 const isLoading = ref<boolean>(false);
 const loginForm = ref<LoginModel>({ email: '', password: '' });
-
 function handleLogin(event: Event): void {
     event.preventDefault();
     if(!loginForm.value.email && !loginForm.value.password){
@@ -20,7 +20,6 @@ function handleLogin(event: Event): void {
         return;
     }
     isLoading.value = true;
-
     const req = loginRequest(loginForm.value);
     req.then(res => {
         push.success({ message: res.data.message, duration: 2000 });
@@ -29,13 +28,12 @@ function handleLogin(event: Event): void {
         }
     })
     .catch(error => {
-        push.error({ message: error.data.message, duration: 2000 });
+        push.error({ message: error.data.message, duration: 2000 })
     })
     .finally(() => {
         isLoading.value = false;
     })
 }
-
 onMounted(() => {
     notifConfig.position.value = 'top-right'
 })
@@ -47,7 +45,7 @@ onMounted(() => {
             <NotificationProgress :item="item"/>
         </Notification>
     </Notivue>
-   
+
     <div class="w-[90%] max-w-[500px] mx-auto flex justify-end">
         <button
             @click="router.push('/')"
@@ -57,7 +55,10 @@ onMounted(() => {
         </button>
     </div>
     
-    <form
+    <motion.form
+        :initial="{ opacity: 0, y: -50 }"
+        :animate="{ opacity: 1, y: 0 }"
+        :transition="{ duration: 0.8 }"
         id="login-form"
         @submit.prevent="handleLogin"
         class="w-[90%] sm:max-w-[500px] flex flex-col justify-self-center gap-y-6 rounded-3xl shadow-2xl p-4 sm:p-10 my-10 inset-8 inset-shadow-sm"
@@ -75,7 +76,7 @@ onMounted(() => {
                 class="border border-neutral-300 rounded-xl px-3 sm:px-4 pt-7 pb-2 focus:outline-none"
             >
             <div class="absolute left-4 top-1 sm:left-4.5 sm:top-2">
-                <span class="text-xs ">Adresse email</span>
+                <span class="text-xs">Adresse e-mail</span>
             </div>
         </label>
         <label 
@@ -90,15 +91,16 @@ onMounted(() => {
                 class="border border-neutral-300 rounded-xl px-3 sm:px-4 pt-7 pb-2 focus:outline-none"
             >
             <div class="absolute left-4 top-1 sm:left-4.5 sm:top-2">
-                <span class="text-xs ">Mot de passe</span>
+                <span class="text-xs">Mot de passe</span>
             </div>
         </label>
-        <button 
+        <motion.button
+            :while-hover="{ scale: 1.02, y: 1.5 }" 
             type="submit"
             class="rounded-xl bg-emerald-400 py-1.5 mx-1 text-sm tracking-tight cursor-pointer hover:opacity-90"
             :disabled="isLoading"
         >
             {{ isLoading ? "Connexion..." : "Se connecter" }}
-        </button>
-    </form>
+        </motion.button>
+    </motion.form>
 </template>
