@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-/* sonar-disable-next-line */
+/* stylelint-disable-next-line at-rule-no-unknown */
 @custom-variant dark (&:where(.dark, .dark *));
 
 body {
