@@ -29,7 +29,7 @@ export const loginRequest = async (loginModelBody: LoginModel): Promise<LoginRes
     } else {
         const myData: LoginResponseError = {
             type: response.data.type,
-            message: response.data.type,
+            message: response.data.message,
         }
         loginResponse = {
             status: response.status,
