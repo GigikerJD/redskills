@@ -1,6 +1,5 @@
 package com.project.core.controllers;
 
-import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -102,37 +101,24 @@ public class UserController {
 
     @PutMapping("/mutate/{user_id}")
     public ResponseEntity<?> updateUser(@PathVariable String user_id, @RequestParam String property, @RequestParam String value){
-        User user = userService.getUserByID(user_id);
-        if (user == null) return ApiResponse.errorResponse("Utilisateur inexistant", 404);
-        switch (property){
-            case "email" -> {
-                user.setEmail(value);
-                userService.saveUser(user);
-                return ApiResponse.successResponse("Votre email a été modifié avec succès");
-            }
-            case "password" -> {
-                userService.hashPasswordForUser(user, value);
-                return ApiResponse.successResponse("Votre mot de passe a été modifié avec succès");
-            }
-            case "firstname" -> {
-                user.setFirstname(value);
-                userService.saveUser(user);
-                return ApiResponse.successResponse("Votre prénom a été modifié avec succès");
-            }
-            case "lastname" -> {
-                user.setLastname(value);
-                userService.saveUser(user);
-                return ApiResponse.successResponse("Votre nom de famille a été modifié avec succès");
-            }
-            case "birthdate" -> {
-                user.setBirthdate(LocalDate.parse(value));
-                userService.saveUser(user);
-                return ApiResponse.successResponse("Votre date de naissance a été modifié avec succès");
-            }
-            default -> {
-                return ApiResponse.errorResponse("Propriété inconnue...", 400);
-            }
+        User updatedUser = userService.mutateUserProperty(user_id, property, value);
+
+        if (updatedUser == null) {
+            User user = userService.getUserByID(user_id);
+            return user == null 
+                ? ApiResponse.errorResponse("Utilisateur inexistant", 404)
+                : ApiResponse.errorResponse("Propriété inconnue...", 400);
         }
+        String message = switch (property) {
+            case "email" -> "Votre email a été modifié avec succès";
+            case "password" -> "Votre mot de passe a été modifié avec succès";
+            case "firstname" -> "Votre prénom a été modifié avec succès";
+            case "lastname" -> "Votre nom de famille a été modifié avec succès";
+            case "birthdate" -> "Votre date de naissance a été modifiée avec succès";
+            default -> "Propriété modifiée avec succès";
+        };
+
+        return ApiResponse.successResponse(message);
     }
 
     @DeleteMapping("/delete")

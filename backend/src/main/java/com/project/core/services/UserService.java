@@ -74,32 +74,23 @@ public class UserService {
             .orElse("Utilisateur inexistant !");
     }
 
-    public String mutateUserProperty(User user, String property, String value){
-        List<String> properties = List.of("email", "firstname", "lastname", "password", "birthdate");
+    public User mutateUserProperty(String userId, String property, String value) {
+        User user = getUserByID(userId);
+        if (user == null) return null;
+        
         switch (property) {
-            case "email" -> {
-                user.setEmail(value);
-                saveUser(user);
-                return "Votre email a été modifiée avec succès";
+            case "email" -> user.setEmail(value);
+            case "password" -> {
+                hashPasswordForUser(user, value);
+                return user;
             }
-            case "firstname" -> {
-                user.setFirstname(value);
-                saveUser(user);
-                return "Votre mot de passe a été modifiée avec succès";
-            }
-            case "lastname" -> {
-                user.setLastname(value);
-                saveUser(user);
-                return "Votre prénom a été modifiée avec succès";
-            }
-            case "birthdate" -> {
-                user.setBirthdate(LocalDate.parse(value));
-                saveUser(user);
-                return "Votre date de naissance a été modifiée avec succès";
-            }
+            case "firstname" -> user.setFirstname(value);
+            case "lastname" -> user.setLastname(value);
+            case "birthdate" -> user.setBirthdate(LocalDate.parse(value));
             default -> {
-                return "Propriété inconnue";
+                return null;
             }
         }
+        return saveUser(user);
     }
 }
