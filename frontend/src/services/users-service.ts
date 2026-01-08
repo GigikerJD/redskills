@@ -29,7 +29,7 @@ export const loginRequest = async (loginModelBody: LoginModel): Promise<LoginRes
     } else {
         const myData: LoginResponseError = {
             type: response.data.type,
-            message: response.data.type,
+            message: response.data.message,
         }
         loginResponse = {
             status: response.status,
@@ -66,7 +66,7 @@ export const registerRequest = async (registerModelBody: RegisterModel): Promise
     } else {
         myData = {
             type: response.data.type,
-            message: response.data.type
+            message: response.data.message
         }
         registerResponse = {
             status: response.status,
@@ -88,9 +88,9 @@ export const userData = async (user_id: string): Promise<UserDataResponse> => {
                 email: response.data.user.email,
                 firstname: response.data.user.firstname,
                 lastname: response.data.user.lastname,
-                birthdate: new Date(response.data.user.birthdate),
-                createdAt: new Date(response.data.user.createdAt),
-                updatedAt: new Date(response.data.user.updatedAt)
+                birthdate: response.data.user.birthdate,
+                createdAt: response.data.user.createdAt,
+                updatedAt: response.data.user.updatedAt
             }
         }
         return dataResponse;
@@ -103,7 +103,7 @@ export const userData = async (user_id: string): Promise<UserDataResponse> => {
         throw dataResponse;
     }
 }
-export const updateProfile: any = async (user_id: string, property: string, value: string): Promise<UpdateProfileResponse> => {
+export const updateProfile = async (user_id: string, property: string, value: string): Promise<UpdateProfileResponse> => {
     const response = await axios.put(`${API_BASE}/${user_id}`, null, {
         params: { property: property, value: value },
         validateStatus: () => true

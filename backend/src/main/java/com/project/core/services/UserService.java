@@ -1,5 +1,6 @@
 package com.project.core.services;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -71,5 +72,25 @@ public class UserService {
         return Optional.ofNullable(user)
             .map(u -> strategies.get(passwordEncoder.matches(password, u.getPassword())))
             .orElse("Utilisateur inexistant !");
+    }
+
+    public User mutateUserProperty(String userId, String property, String value) {
+        User user = getUserByID(userId);
+        if (user == null) return null;
+        
+        switch (property) {
+            case "email" -> user.setEmail(value);
+            case "password" -> {
+                hashPasswordForUser(user, value);
+                return user;
+            }
+            case "firstname" -> user.setFirstname(value);
+            case "lastname" -> user.setLastname(value);
+            case "birthdate" -> user.setBirthdate(LocalDate.parse(value));
+            default -> {
+                return null;
+            }
+        }
+        return saveUser(user);
     }
 }
