@@ -2,11 +2,14 @@ package com.project.core.controllers;
 
 import java.io.IOException;
 
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.core.dto.request.AskRequest;
 import com.project.core.exceptions.OpenAIException;
 import com.project.core.services.OpenAIService;
 
@@ -16,10 +19,11 @@ public class OpenAIController {
     private final OpenAIService openAIService;
     public OpenAIController(OpenAIService openAIService){ this.openAIService = openAIService; }
 
-    @GetMapping("/ask")
-    public String ask(@RequestParam String prompt) {
+    @PostMapping("/ask")
+    public ResponseEntity<String> ask(@RequestBody AskRequest request) {
         try {
-            return openAIService.createChatCompletion(prompt);
+            String result = openAIService.createChatCompletion(request.getPrompt());
+            return ResponseEntity.ok(result);
         } catch (InterruptedException ie) {
             Thread.currentThread().interrupt();
             throw new OpenAIException("OpenAI request was interrupted", ie);
