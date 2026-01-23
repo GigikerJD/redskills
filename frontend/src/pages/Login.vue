@@ -5,7 +5,8 @@ import type { LoginModel } from '../models/FormsModel';
 import { useAppStore } from '../config/RedSkillProvider';
 import { loginRequest } from '../services/users-service';
 import { darkTheme, Notification, NotificationProgress, Notivue, push, useNotivue } from 'notivue';
-import { motion } from 'motion-v';
+import redSkillLogo from '../assets/images/RedSkill.jpg';
+import clsx from 'clsx';
 
 const router = useRouter();
 const appStore = useAppStore();
@@ -40,67 +41,101 @@ onMounted(() => {
 </script>
 
 <template>
+
     <Notivue v-slot="item">
         <Notification :item="item" :theme="darkTheme">
             <NotificationProgress :item="item"/>
         </Notification>
     </Notivue>
 
-    <div class="w-[90%] max-w-[500px] mx-auto flex justify-end">
-        <button
-            @click="router.push('/')"
-            class="flex my-4 rounded-md bg-emerald-400 text-sm px-6 py-1.5 cursor-pointer shadow-2xl hover:opacity-90"
+    <div class="flex flex-row min-h-screen w-full">
+        <div class="w-full lg:w-1/2 flex flex-col justify-center items-center p-4 bg-gray-500/90">
+            <h4 class="text-3xl max-w-100 text-center text-white text-shadow-white text-shadow-xs w-full mb-6 px-2 tracking-tight font-semibold">
+                Connectez-vous à votre espace RedSkill
+            </h4>
+            <div 
+                :class='clsx(
+                    "bg-white max-w-100 w-full flex flex-col justify-center items-center",
+                    "p-6 rounded-lg gap-y-4 shadow-lg drop-shadow-lg",
+                    "hover:shadow-xl hover:drop-shadow-xl/30",
+                    "transition-all duration-200"
+                )'
+            >
+                <form
+                    id="login-form"
+                    @submit.prevent="handleLogin"
+                    class="max-w-100 w-full flex flex-col gap-y-6"
+                >
+                    <div class="relative">
+                        <input
+                            id="login-form-email"
+                            type="email"
+                            v-model="loginForm.email"
+                            :class='clsx(
+                                "border border-slate-600 rounded-lg",
+                                "w-full pt-8 pb-3 px-3 focus:outline-none",
+                                "hover:ring hover:ring-slate-800",
+                                "transition-all duration-200"
+                            )'
+                        >
+                        <label for="login-form-email" class="absolute left-3 top-1.5 text-sm">
+                            Email
+                        </label>
+                    </div>
+                    <div class="relative">
+                        <input
+                            id="login-form-password"
+                            :type="inputType"
+                            v-model="loginForm.password"
+                            :class='clsx(
+                                "border border-slate-600 rounded-lg",
+                                "w-full pt-8 pb-3 px-3 focus:outline-none",
+                                "hover:ring hover:ring-slate-800",
+                                "transition-all duration-200"
+                            )'
+                        >
+                        <label for="login-form-password" class="absolute left-3 top-1.5 text-sm">
+                            Mot de passe
+                        </label>
+                    </div>
+
+                    <button 
+                        type="submit"
+                        :class='clsx(
+                            "px-3 py-2 bg-[#d60a01] hover:bg-red-700 rounded-lg",
+                            "transition-colors duration-200 text-white cursor-pointer"
+                        )'
+                    >
+                        {{ isLoading ? "Connexion..." : "Se connecter" }}
+                    </button>
+                </form>
+                <span class="text-sm text-center italic select-none text-gray-600">
+                    Vous avez perdu votre mot de passe ? 
+                </span>
+                <button class="cursor-pointer rounded p-2 select-none hover:underline underline-offset-2 transition-all duration-300">
+                    Réinitialise-le !
+                </button>
+                <button
+                    type="button"
+                    @click="router.push('/')"
+                    :class='clsx(
+                        "rounded-lg py-2 px-4 select-none self-end bg-black text-white cursor-pointer",
+                        "text-base shadow-lg drop-shadow-lg hover:drop-shadow-xl/40",
+                        "transiton-all duration-200 font-normal hover:scale-95"
+                    )'
+                >
+                    Retour à l'accueil
+                </button>
+            </div>
+        </div>
+        <div 
+            :class='clsx(
+                "hidden w-1/2 lg:flex justify-center items-center",
+                "bg-transparent bg-contain bg-no-repeat bg-center"
+            )'
+            :style="{ backgroundImage: `url(${redSkillLogo})` }"
         >
-            Retour
-        </button>
+            
+        </div>
     </div>
-    
-    <motion.form
-        :initial="{ opacity: 0, y: -50 }"
-        :animate="{ opacity: 1, y: 0 }"
-        :transition="{ duration: 0.8 }"
-        id="login-form"
-        @submit.prevent="handleLogin"
-        class="w-[90%] sm:max-w-[500px] flex flex-col justify-self-center gap-y-6 rounded-3xl shadow-2xl p-4 sm:p-10 my-10 inset-8 inset-shadow-sm"
-    >
-        <h3 class="text-center text-3xl sm:text-5xl font-bold tracking-tight">Connexion</h3>
-        <label 
-            for="email-signin-input"
-            class="flex flex-col relative grow p-1"
-        >
-            <input 
-                type="email" 
-                id="email-signin-input"
-                v-model="loginForm.email"
-                placeholder="example@mail.com"
-                class="border border-neutral-300 rounded-xl px-3 sm:px-4 pt-7 pb-2 focus:outline-none"
-            >
-            <div class="absolute left-4 top-1 sm:left-4.5 sm:top-2">
-                <span class="text-xs">Adresse e-mail</span>
-            </div>
-        </label>
-        <label 
-            for="password-signin-input"
-            class="flex flex-col relative grow p-1"
-        >
-            <input 
-                :type="inputType"
-                id="password-signin-input"
-                v-model="loginForm.password"
-                placeholder="*********************"
-                class="border border-neutral-300 rounded-xl px-3 sm:px-4 pt-7 pb-2 focus:outline-none"
-            >
-            <div class="absolute left-4 top-1 sm:left-4.5 sm:top-2">
-                <span class="text-xs">Mot de passe</span>
-            </div>
-        </label>
-        <motion.button
-            :while-hover="{ scale: 1.02, y: 1.5 }" 
-            type="submit"
-            class="rounded-xl bg-emerald-400 py-1.5 mx-1 text-sm tracking-tight cursor-pointer hover:opacity-90"
-            :disabled="isLoading"
-        >
-            {{ isLoading ? "Connexion..." : "Se connecter" }}
-        </motion.button>
-    </motion.form>
 </template>

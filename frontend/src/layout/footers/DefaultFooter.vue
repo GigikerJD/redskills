@@ -3,9 +3,9 @@
 </script>
 
 <template>
-    <footer class="bg-zinc-800 text-white text-sm font-[Poppins]">
-        <div class="mx-2 my-4">
-            <span class="">Mon footer par défaut</span>
+    <footer class="bg-zinc-900 text-white">
+        <div class="mx-4 my-6 text-center">
+            Tous droits réservés © 2026 RedSkill
         </div>
     </footer>
 </template>

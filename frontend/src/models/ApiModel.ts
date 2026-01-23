@@ -51,3 +51,15 @@ export interface UserDataResponse {
     message: string,
     user?: User | null
 }
+
+export interface ProfileResponse {
+    type: string,
+    status: number,
+    data?: null | {
+        id: string,
+        resultDate: string,
+        userID: string,
+        profileDisc: string,
+        profilePersonality: string
+    }
+}
