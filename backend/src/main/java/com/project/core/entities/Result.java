@@ -33,6 +33,9 @@ public class Result {
     @Field(name = "profilePersonality")
     private String profilePersonality;
 
+    @Field(name = "userID")
+    private String userID;
+
     @CreatedDate
     @Field(name = "created_at")
     private LocalDateTime createdAt;
