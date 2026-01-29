@@ -21,7 +21,7 @@ public class OpenAIController {
     @PostMapping("/ask")
     public ResponseEntity<String> ask(@RequestBody AskRequest request) {
         try {
-            String result = openAIService.createChatCompletion(request.getPrompt());
+            String result = openAIService.createChatCompletion(request.getPrompt(), request.getInstruction());
             return ResponseEntity.ok(result);
         } catch (InterruptedException ie) {
             Thread.currentThread().interrupt();
@@ -31,5 +31,5 @@ public class OpenAIController {
         } catch (IllegalStateException ise) {
             throw new OpenAIException("OpenAI service error: " + ise.getMessage(), ise);
         }
-    }
+    }    
 }

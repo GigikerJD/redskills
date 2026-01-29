@@ -30,10 +30,10 @@ public class OpenAIService {
     // param: prompt - String - the user's input prompt
     // returns: String - the AI's response text
     // throws: IOException, InterruptedException
-    public String createChatCompletion(String prompt) throws IOException, InterruptedException {
+    public String createChatCompletion(String prompt, String instruction) throws IOException, InterruptedException {
         requireApiKey();
 
-        String requestBody = buildResponsesRequest(prompt);
+        String requestBody = buildResponsesRequest(prompt, instruction);
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("https://api.openai.com/v1/responses"))
@@ -79,19 +79,26 @@ public class OpenAIService {
 
     // Builds the request body for the Responses API
     // param: prompt - String - the user's input prompt
+    // param: instruction - String - the system instruction
     // returns: String - JSON request body
     // throws: IOException
-    private String buildResponsesRequest(String prompt) throws IOException {
+    private String buildResponsesRequest(String prompt, String instruction) throws IOException {
         ObjectNode body = mapper.createObjectNode();
-        body.put("model", "gpt-4.1"); // We could use other models here
+        body.put("model", "gpt-5.1"); // We could use other models here
 
-        ObjectNode message = mapper.createObjectNode();
-        message.put("role", "user");
-        message.put("content", prompt);
+        var input = body.putArray("input");
 
-        body.putArray("input").add(message);
+        ObjectNode systemMessage = mapper.createObjectNode();
+        systemMessage.put("role", "system");
+        systemMessage.put("content", instruction);
+        input.add(systemMessage);
 
-        body.put("max_output_tokens", 150); // Limit response length, it can be adjusted
+        ObjectNode userMessage = mapper.createObjectNode();
+        userMessage.put("role", "user");
+        userMessage.put("content", prompt);
+        input.add(userMessage);
+
+        body.put("max_output_tokens", 2000); // Limit response length, it can be adjusted
 
         return mapper.writeValueAsString(body);
     }
@@ -141,5 +148,27 @@ public class OpenAIService {
             }
         }
         return stringBuilder.toString().trim();
+    }
+
+    // Extracts a specific field from the response text assuming it's JSON formatted
+    // param: responseText - String - the full response text
+    // param: field - String - the field to extract (e.g., "score_de_personnalité")
+    // returns: String - the extracted field value
+    private String extractField(String responseText, String field) throws IOException {
+        int start = responseText.indexOf('{');
+        int end = responseText.lastIndexOf('}');
+
+        if (start == -1 || end == -1 || end <= start) {
+            throw new IllegalStateException("No JSON object found in response");
+        }
+
+        String jsonPart = responseText.substring(start, end + 1);
+        JsonNode json = mapper.readTree(jsonPart);
+
+        JsonNode scoreNode = json.get(field);
+        if (scoreNode == null)
+            return "";
+
+        return scoreNode.asText();
     }
 }
