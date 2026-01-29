@@ -2,6 +2,7 @@ package com.project.core.entities;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Map;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
@@ -45,6 +46,33 @@ public class User {
     @Field(name = "birthdate")
     private LocalDate birthdate;
 
+    @Builder.Default
+    @Field(name = "personality_score")
+    private Map<String, Integer> personalityScore = Map.of(
+        "D", 0,
+        "I", 0,
+        "S", 0,
+        "C", 0
+    );
+
+    @Builder.Default
+    @Field(name = "simulated_personnality_stats")
+    private Map<String, Integer> simulatedPersonnalityStats = Map.of(
+        "D", 0,
+        "I", 0,
+        "S", 0,
+        "C", 0
+    );
+
+    @Builder.Default
+    @Field(name = "good_answers_count")
+    private Map<String, Integer> goodAnswersCount = Map.of(
+        "D", 0,
+        "I", 0,
+        "S", 0,
+        "C", 0
+    );
+    
     @CreatedDate
     @Field(name = "created_at")
     private LocalDateTime createdAt;
