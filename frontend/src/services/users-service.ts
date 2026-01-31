@@ -51,7 +51,7 @@ export const registerRequest = async (registerModelBody: RegisterModel): Promise
         })
     let registerResponse: RegisterResponse;
     let myData: RegisterResponseSuccess | RegisterResponseError;
-    if (response.status === 200) {
+    if (response.status === 201) {
         myData = {
             type: response.data.type,
             message: response.data.message,

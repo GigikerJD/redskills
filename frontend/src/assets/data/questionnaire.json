@@ -1,0 +1,525 @@
+{
+  "titre": "Questionnaire sur les styles de personnalité",
+  "liste": [
+    {
+      "numero": 1,
+      "question": "Face à un nouveau défi, votre réaction naturelle est de :",
+      "options": [
+        {
+          "id": "A",
+          "style": "Dominance",
+          "texte": "Relever le défi immédiatement avec détermination."
+        },
+        {
+          "id": "B",
+          "style": "Influence",
+          "texte": "Partager votre enthousiasme avec les autres."
+        },
+        {
+          "id": "C",
+          "style": "Stabilité",
+          "texte": "Prendre le temps d'observer et de stabiliser la situation."
+        },
+        {
+          "id": "D",
+          "style": "Conformité",
+          "texte": "Analyser les données et les risques avant d'agir."
+        }
+      ]
+    },
+    {
+      "numero": 2,
+      "question": "Dans une équipe, vous préférez être perçu comme quelqu'un qui :",
+      "options": [
+        {
+          "id": "A",
+          "style": "Dominance",
+          "texte": "Obtient des résultats rapides et concrets."
+        },
+        {
+          "id": "B",
+          "style": "Influence",
+          "texte": "Motive et inspire les membres du groupe."
+        },
+        {
+          "id": "C",
+          "style": "Stabilité",
+          "texte": "Soutient ses collègues et favorise l'harmonie."
+        },
+        {
+          "id": "D",
+          "style": "Conformité",
+          "texte": "Garantit la précision et la qualité du travail."
+        }
+      ]
+    },
+    {
+      "numero": 3,
+      "question": "Lorsque vous devez convaincre un interlocuteur, vous misez sur :",
+      "options": [
+        {
+          "id": "A",
+          "style": "Dominance",
+          "texte": "Votre assurance et des arguments directs."
+        },
+        {
+          "id": "B",
+          "style": "Influence",
+          "texte": "Votre dynamisme et votre sens relationnel."
+        },
+        {
+          "id": "C",
+          "style": "Stabilité",
+          "texte": "Votre écoute et la création d'un climat de confiance."
+        },
+        {
+          "id": "D",
+          "style": "Conformité",
+          "texte": "Des faits concrets, des chiffres et une logique imparable."
+        }
+      ]
+    },
+    {
+      "numero": 4,
+      "question": "Ce qui vous agace le plus dans le travail collaboratif est :",
+      "options": [
+        {
+          "id": "A",
+          "style": "Dominance",
+          "texte": "Le manque d'efficacité et les hésitations."
+        },
+        {
+          "id": "B",
+          "style": "Influence",
+          "texte": "L'absence d'interactions sociales ou la froideur."
+        },
+        {
+          "id": "C",
+          "style": "Stabilité",
+          "texte": "Les changements brusques ou les conflits ouverts."
+        },
+        {
+          "id": "D",
+          "style": "Conformité",
+          "texte": "Le manque de rigueur ou l'improvisation."
+        }
+      ]
+    },
+    {
+      "numero": 5,
+      "question": "Votre environnement de travail idéal doit être :",
+      "options": [
+        {
+          "id": "A",
+          "style": "Dominance",
+          "texte": "Compétitif, avec des objectifs clairs et de l'autonomie."
+        },
+        {
+          "id": "B",
+          "style": "Influence",
+          "texte": "Animé, favorisant la communication et la créativité."
+        },
+        {
+          "id": "C",
+          "style": "Stabilité",
+          "texte": "Calme, prévisible et basé sur la collaboration."
+        },
+        {
+          "id": "D",
+          "style": "Conformité",
+          "texte": "Structuré, organisé et orienté vers l'expertise technique."
+        }
+      ]
+    },
+    {
+      "numero": 6,
+      "question": "En situation de stress, vous avez tendance à :",
+      "options": [
+        {
+          "id": "A",
+          "style": "Dominance",
+          "texte": "Devenir impatient, voire un peu brusque."
+        },
+        {
+          "id": "B",
+          "style": "Influence",
+          "texte": "Parler davantage pour tenter de détendre l'atmosphère."
+        },
+        {
+          "id": "C",
+          "style": "Stabilité",
+          "texte": "Vous effacer ou accepter des compromis pour éviter le conflit."
+        },
+        {
+          "id": "D",
+          "style": "Conformité",
+          "texte": "Vous replier sur vous-même pour vérifier scrupuleusement les détails."
+        }
+      ]
+    },
+    {
+      "numero": 7,
+      "question": "Pour prendre une décision importante, vous vous basez sur :",
+      "options": [
+        {
+          "id": "A",
+          "style": "Dominance",
+          "texte": "Votre intuition rapide et le gain potentiel."
+        },
+        {
+          "id": "B",
+          "style": "Influence",
+          "texte": "L'impact positif que cela aura sur les gens."
+        },
+        {
+          "id": "C",
+          "style": "Stabilité",
+          "texte": "Le consensus et la sécurité à long terme."
+        },
+        {
+          "id": "D",
+          "style": "Conformité",
+          "texte": "Une analyse comparative et objective des options."
+        }
+      ]
+    },
+    {
+      "numero": 8,
+      "question": "Votre style de communication est plutôt :",
+      "options": [
+        {
+          "id": "A",
+          "style": "Dominance",
+          "texte": "Direct, concis et orienté vers l'action."
+        },
+        {
+          "id": "B",
+          "style": "Influence",
+          "texte": "Expressif, chaleureux et imagé."
+        },
+        {
+          "id": "C",
+          "style": "Stabilité",
+          "texte": "Posé, attentif et diplomate."
+        },
+        {
+          "id": "D",
+          "style": "Conformité",
+          "texte": "Précis, factuel et réservé."
+        }
+      ]
+    },
+    {
+      "numero": 9,
+      "question": "Lors d'une réunion, vous avez tendance à :",
+      "options": [
+        {
+          "id": "A",
+          "style": "Dominance",
+          "texte": "Prendre la direction des débats pour aller droit au but."
+        },
+        {
+          "id": "B",
+          "style": "Influence",
+          "texte": "Intervenir souvent pour partager des idées et encourager les autres."
+        },
+        {
+          "id": "C",
+          "style": "Stabilité",
+          "texte": "Écouter attentivement et vous assurer que tout le monde est à l'aise."
+        },
+        {
+          "id": "D",
+          "style": "Conformité",
+          "texte": "Poser des questions spécifiques pour clarifier les points techniques."
+        }
+      ]
+    },
+    {
+      "numero": 10,
+      "question": "Un nouveau projet vous motive surtout si :",
+      "options": [
+        {
+          "id": "A",
+          "style": "Dominance",
+          "texte": "Il représente un défi de taille à conquérir."
+        },
+        {
+          "id": "B",
+          "style": "Influence",
+          "texte": "Il permet de rencontrer de nouvelles personnes."
+        },
+        {
+          "id": "C",
+          "style": "Stabilité",
+          "texte": "Il s'inscrit dans la continuité et aide l'équipe."
+        },
+        {
+          "id": "D",
+          "style": "Conformité",
+          "texte": "Il demande une réflexion approfondie et de la méthode."
+        }
+      ]
+    },
+    {
+      "numero": 11,
+      "question": "Face à un changement imprévu, votre première réaction est :",
+      "options": [
+        {
+          "id": "A",
+          "style": "Dominance",
+          "texte": "De chercher comment en tirer parti pour gagner du temps."
+        },
+        {
+          "id": "B",
+          "style": "Influence",
+          "texte": "De l'accueillir avec optimisme comme une nouvelle aventure."
+        },
+        {
+          "id": "C",
+          "style": "Stabilité",
+          "texte": "De vous inquiéter pour l'équilibre et la stabilité du groupe."
+        },
+        {
+          "id": "D",
+          "style": "Conformité",
+          "texte": "D'évaluer méthodiquement les conséquences et les procédures."
+        }
+      ]
+    },
+    {
+      "numero": 12,
+      "question": "Vous vous sentez le plus performant quand vous pouvez :",
+      "options": [
+        {
+          "id": "A",
+          "style": "Dominance",
+          "texte": "Commander, décider et agir vite."
+        },
+        {
+          "id": "B",
+          "style": "Influence",
+          "texte": "Persuader, animer et faire rayonner vos idées."
+        },
+        {
+          "id": "C",
+          "style": "Stabilité",
+          "texte": "Coordonner, aider et travailler en équipe soudée."
+        },
+        {
+          "id": "D",
+          "style": "Conformité",
+          "texte": "Planifier, organiser et contrôler la conformité."
+        }
+      ]
+    },
+    {
+      "numero": 13,
+      "question": "Votre entourage vous décrit généralement comme :",
+      "options": [
+        {
+          "id": "A",
+          "style": "Dominance",
+          "texte": "Energique, audacieux et parfois autoritaire."
+        },
+        {
+          "id": "B",
+          "style": "Influence",
+          "texte": "Amical, optimiste et parfois désorganisé."
+        },
+        {
+          "id": "C",
+          "style": "Stabilité",
+          "texte": "Loyal, patient et parfois hésitant."
+        },
+        {
+          "id": "D",
+          "style": "Conformité",
+          "texte": "Rigoureux, réfléchi et parfois distant."
+        }
+      ]
+    },
+    {
+      "numero": 14,
+      "question": "Pour vous, une \"bonne journée\" de travail signifie :",
+      "options": [
+        {
+          "id": "A",
+          "style": "Dominance",
+          "texte": "Avoir abattu une charge de travail importante et atteint ses buts."
+        },
+        {
+          "id": "B",
+          "style": "Influence",
+          "texte": "Avoir eu des échanges riches et stimulants avec les autres."
+        },
+        {
+          "id": "C",
+          "style": "Stabilité",
+          "texte": "Avoir travaillé dans une ambiance sereine et sans tensions."
+        },
+        {
+          "id": "D",
+          "style": "Conformité",
+          "texte": "Avoir résolu des problèmes complexes avec exactitude."
+        }
+      ]
+    },
+    {
+      "numero": 15,
+      "question": "Votre approche des règles et des procédures est la suivante :",
+      "options": [
+        {
+          "id": "A",
+          "style": "Dominance",
+          "texte": "Elles sont utiles si elles ne ralentissent pas les résultats."
+        },
+        {
+          "id": "B",
+          "style": "Influence",
+          "texte": "Elles sont parfois trop rigides et limitent la créativité."
+        },
+        {
+          "id": "C",
+          "style": "Stabilité",
+          "texte": "Elles sont rassurantes et garantissent la paix sociale."
+        },
+        {
+          "id": "D",
+          "style": "Conformité",
+          "texte": "Elles sont essentielles et doivent être suivies à la lettre."
+        }
+      ]
+    },
+    {
+      "numero": 16,
+      "question": "Dans un conflit, vous agissez de manière à :",
+      "options": [
+        {
+          "id": "A",
+          "style": "Dominance",
+          "texte": "Affronter le problème de face pour le régler vite."
+        },
+        {
+          "id": "B",
+          "style": "Influence",
+          "texte": "Utiliser l'humour ou la persuasion pour apaiser les esprits."
+        },
+        {
+          "id": "C",
+          "style": "Stabilité",
+          "texte": "Rechercher un compromis pour préserver la relation."
+        },
+        {
+          "id": "D",
+          "style": "Conformité",
+          "texte": "Analyser les causes objectives du désaccord froidement."
+        }
+      ]
+    },
+    {
+      "numero": 17,
+      "question": "Votre rythme de travail est plutôt :",
+      "options": [
+        {
+          "id": "A",
+          "style": "Dominance",
+          "texte": "Rapide, soutenu et orienté vers l'urgence."
+        },
+        {
+          "id": "B",
+          "style": "Influence",
+          "texte": "Variable, impulsif et dicté par l'enthousiasme."
+        },
+        {
+          "id": "C",
+          "style": "Stabilité",
+          "texte": "Régulier, calme et sans précipitation."
+        },
+        {
+          "id": "D",
+          "style": "Conformité",
+          "texte": "Méthodique, structuré et respectueux des délais."
+        }
+      ]
+    },
+    {
+      "numero": 18,
+      "question": "Pour déléguer une tâche, vous :",
+      "options": [
+        {
+          "id": "A",
+          "style": "Dominance",
+          "texte": "Donnez l'objectif final et laissez carte blanche."
+        },
+        {
+          "id": "B",
+          "style": "Influence",
+          "texte": "Présentez le projet de façon motivante."
+        },
+        {
+          "id": "C",
+          "style": "Stabilité",
+          "texte": "Expliquez comment faire pour ne pas perturber l'autre."
+        },
+        {
+          "id": "D",
+          "style": "Conformité",
+          "texte": "Fournissez des instructions écrites et des critères précis."
+        }
+      ]
+    },
+    {
+      "numero": 19,
+      "question": "Quel mot vous correspond le mieux parmi les suivants ?",
+      "options": [
+        {
+          "id": "A",
+          "style": "Dominance",
+          "texte": "Détermination."
+        },
+        {
+          "id": "B",
+          "style": "Influence",
+          "texte": "Rayonnement."
+        },
+        {
+          "id": "C",
+          "style": "Stabilité",
+          "texte": "Sérénité."
+        },
+        {
+          "id": "D",
+          "style": "Conformité",
+          "texte": "Analyse."
+        }
+      ]
+    },
+    {
+      "numero": 20,
+      "question": "Lorsque vous recevez un feedback, vous préférez qu'il soit :",
+      "options": [
+        {
+          "id": "A",
+          "style": "Dominance",
+          "texte": "Franc et direct, même s'il est critique."
+        },
+        {
+          "id": "B",
+          "style": "Influence",
+          "texte": "Valorisant et tourné vers votre potentiel."
+        },
+        {
+          "id": "C",
+          "style": "Stabilité",
+          "texte": "Bienveillant et exprimé avec diplomatie."
+        },
+        {
+          "id": "D",
+          "style": "Conformité",
+          "texte": "Documenté, précis et basé sur des preuves."
+        }
+      ]
+    }
+  ]
+}

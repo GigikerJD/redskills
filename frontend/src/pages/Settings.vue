@@ -3,7 +3,7 @@
 </script>
 
 <template>
-
+    <div>Paramètres</div>
 </template>
 
 <style scoped>

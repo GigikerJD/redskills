@@ -5,12 +5,13 @@ import { onMounted, ref } from 'vue';
 import type { RegisterModel } from '../models/FormsModel';
 import { darkTheme, Notification, NotificationProgress, Notivue, push, useNotivue } from 'notivue';
 import { registerRequest } from '../services/users-service';
+import redSkillLogo from '../assets/images/RedSkill.jpg';
+import clsx from 'clsx';
 
 const router = useRouter();
 const appStore = useAppStore();
 const notifConfig = useNotivue();
 const isLoading = ref<boolean>(false);
-const confirmPassword = ref<string>("");
 const registerForm = ref<RegisterModel>({
     email: '',
     password: '',
@@ -19,29 +20,18 @@ const registerForm = ref<RegisterModel>({
     birthdate: ''
 });
 
-function passwordMatches(first: string, second: string): boolean {
-    return first === second
-}
-
 function handleRegister(event: Event): void {
     event.preventDefault();
     if (!registerForm.value.email ||
         !registerForm.value.password ||
         !registerForm.value.firstname ||
         !registerForm.value.lastname ||
-        !registerForm.value.birthdate ||
-        !confirmPassword
+        !registerForm.value.birthdate
     ){
         push.error({ message: "Données manquantes...", duration: 2000 });
         return;
     }
     isLoading.value = true;
-
-    const bothMatches = passwordMatches(registerForm.value.password, confirmPassword.value);
-    if (!bothMatches) {
-        push.error({ message: "Mots de passe différents", duration: 2000 })
-        return;
-    }
 
     const req = registerRequest(registerForm.value);
     req.then(res => {
@@ -70,125 +60,149 @@ onMounted(() => {
         </Notification>
     </Notivue>
 
-    <div class="w-[80%] max-w-[525px] mx-auto flex justify-end">
-        <button
-            @click="router.push('/')"
-            class="flex my-4 rounded-md bg-emerald-400 text-sm px-6 py-1.5 cursor-pointer shadow-2xl hover:opacity-90"
-        >
-            Retour
-        </button>
-    </div>
-
-    <div class="size-full flex flex-col justify-center items-center">
-        <form
-            id="signup-form"
-            @submit="handleRegister"
-            class="w-[80%] sm:max-w-[525px] flex flex-col justify-self-center gap-y-3 sm:gap-y-6 rounded-3xl shadow-2xl p-4 sm:p-10 mt-1 mb-10 inset-8 inset-shadow-sm"
-        >
-            <h3 class="text-center text-3xl sm:text-5xl font-bold tracking-tight">Inscrivez-vous en un clic !</h3>
-
-            <div class="flex flex-col sm:flex-row sm:justify-between gap-y-3 sm:gap-y-6 gap-x-4">
-                <label 
-                    for="firstname-signup-input" 
-                    class="flex flex-col relative grow p-1 sm:w-2/5"
-                >
-                    <input 
-                        type="text"
-                        id="firstname-signup-input"
-                        placeholder="Votre prénom"
-                        v-model="registerForm.firstname"
-                        class="border border-neutral-300 rounded-xl px-3 sm:px-4 pt-7 pb-2 focus:outline-none "
-                    >
-                    <div class="absolute left-4 top-1 sm:left-4.5 sm:top-2">
-                        <span class="text-xs">Prénom</span>
+    <div class="flex flex-row min-h-screen w-full">
+        <div class="w-full lg:w-1/2 flex flex-col justify-center items-center p-4 bg-gray-500/90">
+            <h4 class="text-3xl max-w-125 text-center text-white w-full mb-6 px-2 tracking-tight font-semibold">
+                Inscrivez-vous à votre espace RedSkill
+            </h4>
+            <form
+                id="register-form"
+                @submit.prevent="handleRegister"
+                :class="clsx(
+                    'max-w-125 w-full rounded-lg p-8 bg-white',
+                    'flex flex-col gap-y-6',
+                    'shadow-lg drop-shadow-lg hover:shadow-xl hover:drop-shadow-xl/30',
+                    'transition-all duration-250'
+                )"
+            >
+                <div class="flex flex-col justify-between md:flex-row gap-y-6 md:gap-2">
+                    <div class="relative">
+                        <input
+                            id="register-form-firstname" 
+                            type="text"
+                            v-model="registerForm.firstname"
+                            :class='clsx(
+                                "border border-slate-600 rounded-lg",
+                                "w-full pt-8 pb-3 px-3 focus:outline-none",
+                                "hover:ring hover:ring-slate-800",
+                                "transition-all duration-200"
+                            )'
+                        />
+                        <label 
+                            for="register-form-firstname"
+                            class="absolute left-3 top-1.5 text-sm"
+                        >
+                            Prénom
+                        </label>
                     </div>
-                </label>
-                <label 
-                    for="lastname-signup-input" 
-                    class="flex flex-col relative grow p-1 sm:w-2/5"
-                >
-                    <input 
-                        type="text"
-                        id="lastname-signup-input"
-                        placeholder="Votre nom de famille"
-                        v-model="registerForm.lastname"
-                        class="border border-neutral-300 rounded-xl px-3 sm:px-4 pt-7 pb-2 focus:outline-none "
-                    >
-                    <div class="absolute left-4 top-1 sm:left-4.5 sm:top-2">
-                        <span class="text-xs">Nom de famille</span>
+                    <div class="relative">
+                        <input 
+                            type="text"
+                            id="register-form-lastname"
+                            v-model="registerForm.lastname"
+                            :class='clsx(
+                                "border border-slate-600 rounded-lg",
+                                "w-full pt-8 pb-3 px-3 focus:outline-none",
+                                "hover:ring hover:ring-slate-800",
+                                "transition-all duration-200"
+                            )'
+                        >
+                        <label
+                            for="register-form-lastname"
+                            class="absolute left-3 top-1.5 text-sm"
+                        >
+                            Nom de famille
+                        </label>
                     </div>
-                </label>
-            </div>
-
-            <label 
-                for="email-signup-input" 
-                class="flex flex-col relative grow p-1"
-            >
-                <input 
-                    type="email"
-                    id="email-signup-input"
-                    placeholder="example@mail.com"
-                    v-model="registerForm.email"
-                    class="border border-neutral-300 rounded-xl px-3 sm:px-4 pt-7 pb-2 focus:outline-none"
-                >
-                <div class="absolute left-4 top-1 sm:left-4.5 sm:top-2">
-                    <span class="text-xs">Email</span>
                 </div>
-            </label>
 
-            <label 
-                for="password-signup-input" 
-                class="flex flex-col relative grow p-1"
-            >
-                <input 
-                    type="password"
-                    id="password-signup-input"
-                    placeholder="Tapez votre mot de passe"
-                    v-model="registerForm.password"
-                    class="border border-neutral-300 rounded-xl px-3 sm:px-4 pt-7 pb-2 focus:outline-none placeholder:italic"
-                >
-                <div class="absolute left-4 top-1 sm:left-4.5 sm:top-2">
-                    <span class="text-xs">Mot de passe</span>
+                <div class="relative">
+                    <input 
+                        type="email"
+                        v-model="registerForm.email"
+                        :class='clsx(
+                            "border border-slate-600 rounded-lg",
+                            "w-full pt-8 pb-3 px-3 focus:outline-none",
+                            "hover:ring hover:ring-slate-800",
+                            "transition-all duration-200"
+                        )'
+                    >
+                    <label 
+                        for="register-form-email"
+                        class="absolute left-3 top-1.5 text-sm"
+                    >
+                        Email
+                    </label>
                 </div>
-            </label>
-
-            <label 
-                for="confirm-password-signup-input" 
-                class="flex flex-col relative grow p-1"
-            >
-                <input 
-                    type="password"
-                    id="confirm-password-signup-input"
-                    placeholder="Tapez à nouveau votre mot de passe"
-                    v-model="confirmPassword"
-                    class="border border-neutral-300 rounded-xl px-3 sm:px-4 pt-7 pb-2 focus:outline-none placeholder:italic"
-                >
-                <div class="absolute left-4 top-1 sm:left-4.5 sm:top-2">
-                    <span class="text-xs">Confirmer le mot de passe</span>
+                <div class="relative">
+                    <input 
+                        type="password"
+                        id="register-form-password"
+                        v-model="registerForm.password"
+                        :class='clsx(
+                            "border border-slate-600 rounded-lg",
+                            "w-full pt-8 pb-3 px-3 focus:outline-none",
+                            "hover:ring hover:ring-slate-800",
+                            "transition-all duration-200"
+                        )'
+                    >
+                    <label 
+                        for="register-form-password"
+                        class="absolute left-3 top-1.5 text-sm"
+                    >
+                        Mot de passe
+                    </label>
                 </div>
-            </label>
-
-            <label 
-                for="birthdate-signup-input" 
-                class="flex flex-col relative grow p-1"
-            >
-                <input 
-                    type="date"
-                    id="birthdate-signup-input"
-                    v-model="registerForm.birthdate"
-                    class="border border-neutral-300 rounded-xl px-3 sm:px-4 pt-7 pb-2 focus:outline-none"
-                >
-                <div class="absolute left-4 top-1 sm:left-4.5 sm:top-2">
-                    <span class="text-xs">Date de naissance</span>
+                <div class="relative">
+                    <input
+                        id="register-form-birthdate" 
+                        type="date"
+                        v-model="registerForm.birthdate"
+                        :class='clsx(
+                            "border border-slate-600 rounded-lg",
+                            "w-full pt-8 pb-3 px-3 focus:outline-none",
+                            "hover:ring hover:ring-slate-800",
+                            "transition-all duration-200"
+                        )'
+                    >
+                    <label 
+                        for="register-form-birthdate"
+                        class="absolute left-3 top-1.5 text-sm"
+                    >
+                        Date de naissance
+                    </label>
                 </div>
-            </label>
 
-            <button 
-                type="submit"
-                class="rounded-xl bg-emerald-400 py-1.5 mx-1 text-sm tracking-tight cursor-pointer hover:opacity-90"
-            >
-                S'inscrire
-            </button>
-        </form>
+                <button 
+                    type="submit"
+                    :class='clsx(
+                        "px-3 py-2 bg-[#d60a01] hover:bg-red-700 rounded-lg",
+                        "transition-colors duration-200 text-white cursor-pointer"
+                    )'
+                >
+                    {{ isLoading ? 'Inscription en cours...' : "S'inscrire" }}
+                </button>
+
+                <button
+                    type="button"
+                    @click="router.push('/')"
+                    :class='clsx(
+                        "rounded-lg py-2 px-4 select-none self-end bg-black text-white cursor-pointer",
+                        "text-base shadow-lg drop-shadow-lg hover:drop-shadow-xl/40",
+                        "transiton-all duration-200 font-normal hover:scale-95"
+                    )'
+                >
+                    Retour à l'accueil
+                </button>
+            </form>
+        </div>
+        <div
+            :class='clsx(
+                "hidden w-1/2 lg:flex justify-center items-center",
+                "bg-transparent bg-contain bg-no-repeat bg-center"
+            )'
+            :style="{ backgroundImage: `url(${redSkillLogo})` }"
+        >
+        </div>
     </div>
 </template>
