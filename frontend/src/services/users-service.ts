@@ -89,6 +89,9 @@ export const userData = async (user_id: string): Promise<UserDataResponse> => {
                 firstname: response.data.user.firstname,
                 lastname: response.data.user.lastname,
                 birthdate: response.data.user.birthdate,
+                personality_score: response.data.user.personality_score,
+                simulated_personnality_stats: response.data.user.simulated_personnality_stats,
+                good_answers_count: response.data.user.good_answers_count,
                 createdAt: response.data.user.createdAt,
                 updatedAt: response.data.user.updatedAt
             }
@@ -127,4 +130,32 @@ export const deleteProfile: any = async (user_id: string): Promise<DeleteProfile
     };
     if (response.status === 200) return deletedProfileResponse;
     else throw deletedProfileResponse;
+}
+
+export const updateScores = async (user_id: string, property: string, value: Record<string, number>): Promise<UpdateProfileResponse> => {
+    const response = await axios.put(`${API_BASE}/scores/${user_id}`, null, {
+        params: { property: property, value: JSON.stringify(value) },
+        validateStatus: () => true
+    })
+    const updatedProfileResponse: UpdateProfileResponse = {
+        status: response.status,
+        type: response.data.type,
+        message: response.data.message,
+    }
+    if (response.status === 200) return updatedProfileResponse;
+    else throw updatedProfileResponse;
+}
+
+export const updateGoodAnswersCount = async (user_id: string, property: string, value: Record<string, number>): Promise<UpdateProfileResponse> => {
+    const response = await axios.put(`${API_BASE}/good-answers/${user_id}`, null, {
+        params: { property: property, value: JSON.stringify(value) },
+        validateStatus: () => true
+    })
+    const updatedProfileResponse: UpdateProfileResponse = {
+        status: response.status,
+        type: response.data.type,
+        message: response.data.message,
+    }
+    if (response.status === 200) return updatedProfileResponse;
+    else throw updatedProfileResponse;
 }
