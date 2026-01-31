@@ -93,4 +93,67 @@ public class UserService {
         }
         return saveUser(user);
     }
+    public Map<String, Double> parseScores(String value) {
+        Map<String, Double> scores = new java.util.HashMap<>();
+        String trimmed = value.trim().replaceAll("[{}\"]", "");
+        if (trimmed.isEmpty()) return scores;
+        String[] entries = trimmed.split(",");
+        for (String entry : entries) {
+            String[] keyValue = entry.split(":");
+            if (keyValue.length == 2) {
+                String key = keyValue[0].trim();
+                try {
+                    Double val = Double.parseDouble(keyValue[1].trim());
+                    scores.put(key, val);
+                } catch (NumberFormatException e) {
+                    // fallback to 0.0 if parse fails
+                    scores.put(key, 0.0);
+                }
+            }
+        }
+        return scores;
+    }
+
+    public Map<String, Integer> parseGoodAnswerCount(String value) {
+        Map<String, Integer> counts = new java.util.HashMap<>();
+        String trimmed = value.trim().replaceAll("[{}\"]", "");
+        if (trimmed.isEmpty()) return counts;
+        String[] entries = trimmed.split(",");
+        for (String entry : entries) {
+            String[] keyValue = entry.split(":");
+            if (keyValue.length == 2) {
+                String key = keyValue[0].trim();
+                try {
+                    Integer val = Integer.parseInt(keyValue[1].trim());
+                    counts.put(key, val);
+                } catch (NumberFormatException e) {
+                    // fallback to 0 if parse fails
+                    counts.put(key, 0);
+                }
+            }
+        }
+        return counts;
+    }
+
+    public User mutateUserScores(String userId, String property, Map<String, Double> value) {
+        User user = getUserByID(userId);
+        if (user == null) return null;
+        
+        switch (property) {
+            case "personality_score" -> user.setPersonalityScore(value);
+            case "simulated_personnality_stats" -> user.setSimulatedPersonnalityStats(value);
+            default -> {
+                return null;
+            }
+        }
+        return saveUser(user);
+    }
+
+    public User mutateUserGoodAnswersCount(String userId, Map<String, Integer> value) {
+        User user = getUserByID(userId);
+        if (user == null) return null;
+        
+        user.setGoodAnswersCount(value);
+        return saveUser(user);
+    }
 }

@@ -121,6 +121,36 @@ public class UserController {
         return ApiResponse.successResponse(message);
     }
 
+    @PutMapping("/scores/{user_id}")
+    public ResponseEntity<?> updateScores(@PathVariable String user_id, @RequestParam String property, @RequestParam String value){
+        Map<String, Double> parsedValue = userService.parseScores(value);
+        User updatedUser = userService.mutateUserScores(user_id, property, parsedValue);
+
+        if (updatedUser == null) {
+            User user = userService.getUserByID(user_id);
+            return user == null 
+                ? ApiResponse.errorResponse("Utilisateur inexistant", 404)
+                : ApiResponse.errorResponse("Propriété inconnue...", 400);
+        }
+
+        return ApiResponse.successResponse("Propriété modifiée avec succès");
+    }
+
+    @PutMapping("good-answers/{user_id}")
+    public ResponseEntity<?> updateGoodAnswers(@PathVariable String user_id, @RequestParam String value){
+        Map<String, Integer> parsedValue = userService.parseGoodAnswerCount(value);
+        User updatedUser = userService.mutateUserGoodAnswersCount(user_id, parsedValue);
+
+        if (updatedUser == null) {
+            User user = userService.getUserByID(user_id);
+            return user == null 
+                ? ApiResponse.errorResponse("Utilisateur inexistant", 404)
+                : ApiResponse.errorResponse("Propriété inconnue...", 400);
+        }
+
+        return ApiResponse.successResponse("Propriété modifiée avec succès");
+    }
+
     @DeleteMapping("/delete")
     public ResponseEntity<?> deleteUser(@RequestParam String userID){
         User user = userService.getUserByID(userID);
