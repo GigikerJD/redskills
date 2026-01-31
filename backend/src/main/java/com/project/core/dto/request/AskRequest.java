@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AskRequest {
+    private String instruction;
     private String prompt;
 
     public String getPrompt() {
@@ -16,5 +17,13 @@ public class AskRequest {
 
     public void setPrompt(String prompt) {
         this.prompt = prompt;
+    }
+
+    public String getInstruction() {
+        return instruction;
+    }
+    
+    public void setInstruction(String instruction) {
+        this.instruction = instruction;
     }
 }
