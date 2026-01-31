@@ -40,14 +40,14 @@ const colorToPersonality: Record<string, string> = {
 
 const chooseOption = (color: string | undefined) => {
     if(!color) return;
-    personalityScores.value[color] += 1;
+    personalityScores.value[color] = (personalityScores.value[color] ?? 0) + 1;
     score.value += 1;
     currentQuestionIndex.value += 1;
 }
 
 // Calculer le score en décimal (x/20)
 const getScoreDecimal = (color: string): number => {
-    return personalityScores.value[color] / 20;
+    return (personalityScores.value[color] ?? 0) / 20;
 }
 
 // Vérification que la somme = 1
@@ -74,7 +74,7 @@ const getDominantProfile = () => {
 };
 
 const formatDate = (): string => {
-    return new Date().toISOString().split('T')[0];
+    return new Date().toISOString().split('T')[0] ?? '';
 };
 
 const completeSurvey = async () => {
@@ -82,8 +82,8 @@ const completeSurvey = async () => {
     
     const resultModel: ResultModel = {
         resultDate: formatDate(),
-        profileDisc: profile.discLetter,
-        profilePersonality: profile.personality,
+        profileDisc: profile.discLetter?? '',
+        profilePersonality: profile.personality?? '',
         userID: appStore.userID
     };
     

@@ -63,3 +63,17 @@ export interface ProfileResponse {
         profilePersonality: string
     } | null;
 }
+
+export interface GenerateExerciseResponse {
+    scenario: string,
+    rep_a: string,
+    rep_b: string,
+    rep_c: string,
+    rep_d: string,
+    personnality: string
+}
+
+export interface GenerateFeedbackResponse {
+    answer: boolean,
+    feedback: string
+}
