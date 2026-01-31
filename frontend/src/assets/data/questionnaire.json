@@ -1,6 +1,6 @@
 {
   "titre": "Questionnaire sur les styles de personnalité",
-  "questions": [
+  "liste": [
     {
       "numero": 1,
       "question": "Face à un nouveau défi, votre réaction naturelle est de :",

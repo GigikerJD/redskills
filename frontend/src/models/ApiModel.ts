@@ -61,5 +61,5 @@ export interface ProfileResponse {
         userID: string,
         profileDisc: string,
         profilePersonality: string
-    }
+    } | null;
 }

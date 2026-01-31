@@ -22,4 +22,18 @@ public class ResultService {
         return userResult.orElse(null);
     }
 
+    public void saveResultForUser(String userID, Result result){
+        var existingResult = findProfileForUser(userID);
+        
+        if (existingResult != null) {
+            existingResult.setProfileDisc(result.getProfileDisc());
+            existingResult.setProfilePersonality(result.getProfilePersonality());
+            existingResult.setResultDate(result.getResultDate());
+            resultRepository.save(existingResult);
+        } else {
+            result.setUserID(userID);
+            resultRepository.save(result);
+        }
+    }
+
 }
