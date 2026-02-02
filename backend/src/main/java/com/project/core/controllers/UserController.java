@@ -121,6 +121,21 @@ public class UserController {
         return ApiResponse.successResponse(message);
     }
 
+    @PostMapping("/feedback/{user_id}")
+    public ResponseEntity<?> updateScores(@PathVariable String user_id, @RequestParam String target, @RequestParam boolean answer){
+        User updatedUser = userService.updateUserScoresAfterFeedback(user_id, target, answer);
+
+        if (updatedUser == null) {
+            User user = userService.getUserByID(user_id);
+            return user == null 
+                ? ApiResponse.errorResponse("Utilisateur inexistant", 404)
+                : ApiResponse.errorResponse("Propriété inconnue...", 400);
+        }
+
+        return ApiResponse.successResponse("Scores mis à jour avec succès");
+        
+    }
+
     @DeleteMapping("/delete")
     public ResponseEntity<?> deleteUser(@RequestParam String userID){
         User user = userService.getUserByID(userID);

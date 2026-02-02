@@ -89,6 +89,9 @@ export const userData = async (user_id: string): Promise<UserDataResponse> => {
                 firstname: response.data.user.firstname,
                 lastname: response.data.user.lastname,
                 birthdate: response.data.user.birthdate,
+                personalityScore: response.data.user.personalityScore,
+                simulatedPersonnalityStats: response.data.user.simulatedPersonnalityStats,
+                goodAnswersCount: response.data.user.goodAnswersCount,
                 createdAt: response.data.user.createdAt,
                 updatedAt: response.data.user.updatedAt
             }
@@ -127,4 +130,21 @@ export const deleteProfile: any = async (user_id: string): Promise<DeleteProfile
     };
     if (response.status === 200) return deletedProfileResponse;
     else throw deletedProfileResponse;
+}
+
+export const updateScores = async (user_id: string, target: string | null, answer: boolean): Promise<UpdateProfileResponse> => {
+    const response = await axios.post(`${API_BASE}/feedback/${user_id}`, null, {
+        params: { target: target, answer: answer },
+        validateStatus: () => true
+    })
+    const updatedProfileResponse: UpdateProfileResponse = {
+        status: response.status,
+        type: response.data.type,
+        message: response.data.message,
+    }
+    if (response.status === 200) return updatedProfileResponse;
+    else {
+        console.log('Error updating scores:', updatedProfileResponse);
+        throw updatedProfileResponse
+    }
 }

@@ -72,10 +72,11 @@ onMounted(async () => {
                     <button 
                         type="button"
                         :class='clsx(
-                            "cursor-not-allowed bg-emerald-500 text-white shadowlg drop-shadow-lg p-2 rounded-lg",
+                            "cursor-pointer bg-emerald-500 text-white shadowlg drop-shadow-lg p-2 rounded-lg",
                             "hover:shadow-xl hover:drop-shadow-xl transition-all duration-300 w-full",
                             "flex flex-row justify-center items-center gap-2"
                         )'
+                        @click="router.push('/exercise')"
                     >
                         <Play class="size-5"/>
                         Commencer un exercice

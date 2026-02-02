@@ -48,20 +48,20 @@ public class User {
 
     @Builder.Default
     @Field(name = "personality_score")
-    private Map<String, Integer> personalityScore = Map.of(
-        "D", 0,
-        "I", 0,
-        "S", 0,
-        "C", 0
+    private Map<String, Double> personalityScore = Map.of(
+        "D", 0.0,
+        "I", 0.0,
+        "S", 0.0,
+        "C", 0.0
     );
 
     @Builder.Default
     @Field(name = "simulated_personnality_stats")
-    private Map<String, Integer> simulatedPersonnalityStats = Map.of(
-        "D", 0,
-        "I", 0,
-        "S", 0,
-        "C", 0
+    private Map<String, Double> simulatedPersonnalityStats = Map.of(
+        "D", 0.0,
+        "I", 0.0,
+        "S", 0.0,
+        "C", 0.0
     );
 
     @Builder.Default

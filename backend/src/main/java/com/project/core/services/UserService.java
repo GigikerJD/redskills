@@ -93,4 +93,31 @@ public class UserService {
         }
         return saveUser(user);
     }
+
+    public User updateUserScoresAfterFeedback(String userId, String target, boolean answer) {
+        User user = getUserByID(userId);
+        if (user == null) return null;
+
+        Map<String, Double> simulatedStats = user.getSimulatedPersonnalityStats();
+        Map<String, Integer> goodAnswers = user.getGoodAnswersCount();
+
+        if (!simulatedStats.containsKey(target) || !goodAnswers.containsKey(target)) {
+            return null;
+        }
+
+        double currentStat = simulatedStats.get(target) + 1.0; // Always increment stat by 1 on feedback
+        int currentGoodAnswers = goodAnswers.get(target);
+
+        if (answer) {
+            currentGoodAnswers += 1;
+        }
+
+        simulatedStats.put(target, currentStat);
+        goodAnswers.put(target, currentGoodAnswers);
+
+        user.setSimulatedPersonnalityStats(simulatedStats);
+        user.setGoodAnswersCount(goodAnswers);
+
+        return saveUser(user);
+    }
 }
