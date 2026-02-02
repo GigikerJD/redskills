@@ -89,9 +89,9 @@ export const userData = async (user_id: string): Promise<UserDataResponse> => {
                 firstname: response.data.user.firstname,
                 lastname: response.data.user.lastname,
                 birthdate: response.data.user.birthdate,
-                personality_score: response.data.user.personality_score,
-                simulated_personnality_stats: response.data.user.simulated_personnality_stats,
-                good_answers_count: response.data.user.good_answers_count,
+                personalityScore: response.data.user.personalityScore,
+                simulatedPersonnalityStats: response.data.user.simulatedPersonnalityStats,
+                goodAnswersCount: response.data.user.goodAnswersCount,
                 createdAt: response.data.user.createdAt,
                 updatedAt: response.data.user.updatedAt
             }

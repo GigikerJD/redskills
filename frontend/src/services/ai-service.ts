@@ -16,9 +16,16 @@ const feedback_instruction = "Dans le cadre d'un entraînement aux communication
 export const generateExercise = async (user_id: string): Promise<GenerateExerciseResponse> => {
     // Fetch user data to get scores and personalize the exercise
     const userResponse: UserDataResponse = await userData(user_id);
-    const personalityScore = userResponse.user?.personality_score || { D: 0, I: 0, S: 0, C: 0 };
-    const simulated_personnality_stats = userResponse.user?.simulated_personnality_stats || { D: 0, I: 0, S: 0, C: 0 };
-    const good_answers_count = userResponse.user?.good_answers_count || { D: 0, I: 0, S: 0, C: 0 };
+    const personalityScore = userResponse.user?.personalityScore ?? {
+        D: 0, I: 0, S: 0, C: 0
+    };
+    const simulated_personnality_stats = userResponse.user?.simulatedPersonnalityStats ?? {
+        D: 0, I: 0, S: 0, C: 0
+    };
+    const good_answers_count = userResponse.user?.goodAnswersCount ?? {
+        D: 0, I: 0, S: 0, C: 0
+    };
+
     const simulated_personnality_stats_D = simulated_personnality_stats.D ?? 0;
     const simulated_personnality_stats_I = simulated_personnality_stats.I ?? 0;
     const simulated_personnality_stats_S = simulated_personnality_stats.S ?? 0;
@@ -27,6 +34,8 @@ export const generateExercise = async (user_id: string): Promise<GenerateExercis
     const responseCountI = simulated_personnality_stats_I > 0 ? ((good_answers_count.I ?? 0) / simulated_personnality_stats_I) : 0;
     const responseCountS = simulated_personnality_stats_S > 0 ? ((good_answers_count.S ?? 0) / simulated_personnality_stats_S) : 0;
     const responseCountC = simulated_personnality_stats_C > 0 ? ((good_answers_count.C ?? 0) / simulated_personnality_stats_C) : 0;
+    console.log(simulated_personnality_stats);
+    console.log('D', simulated_personnality_stats_D, 'I', simulated_personnality_stats_I, 'S', simulated_personnality_stats_S, 'C', simulated_personnality_stats_C);
 
     const prompt = `Ta tâche est de générer un exercice. L'utilisateur a un score de personnalité de [D:${personalityScore.D};I:${personalityScore.I};S:${personalityScore.S};C:${personalityScore.C}], un score de réponse de [D:${responseCountD};I:${responseCountI};S:${responseCountS};C:${responseCountC}] et un simulated_personnality_stats de [D:${simulated_personnality_stats_D};I:${simulated_personnality_stats_I};S:${simulated_personnality_stats_S};C:${simulated_personnality_stats_C}]. Concentre toi sur son score de réponse le plus faible pour la génération de l'exercice.`;
 
@@ -67,8 +76,8 @@ export const generateFeedback = async (user_id: string, scenario: string, chosen
         console.log('User answered incorrectly');
 
     const userResponse: UserDataResponse = await userData(user_id);
-    const goodAnswersCount = userResponse.user?.good_answers_count || { D: 0, I: 0, S: 0, C: 0 };
-    const simulatedPersonnalityStats = userResponse.user?.simulated_personnality_stats || { D: 0, I: 0, S: 0, C: 0 };
+    const goodAnswersCount = userResponse.user?.goodAnswersCount || { D: 0, I: 0, S: 0, C: 0 };
+    const simulatedPersonnalityStats = userResponse.user?.simulatedPersonnalityStats || { D: 0, I: 0, S: 0, C: 0 };
 
     switch (target) {
         case 'D':
