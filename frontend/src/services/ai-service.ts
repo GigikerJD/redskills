@@ -30,14 +30,35 @@ export const generateExercise = async (user_id: string): Promise<GenerateExercis
     const simulated_personnality_stats_I = simulated_personnality_stats.I ?? 0;
     const simulated_personnality_stats_S = simulated_personnality_stats.S ?? 0;
     const simulated_personnality_stats_C = simulated_personnality_stats.C ?? 0;
-    const responseCountD = simulated_personnality_stats_D > 0 ? ((good_answers_count.D ?? 0) / simulated_personnality_stats_D) : 0;
-    const responseCountI = simulated_personnality_stats_I > 0 ? ((good_answers_count.I ?? 0) / simulated_personnality_stats_I) : 0;
-    const responseCountS = simulated_personnality_stats_S > 0 ? ((good_answers_count.S ?? 0) / simulated_personnality_stats_S) : 0;
-    const responseCountC = simulated_personnality_stats_C > 0 ? ((good_answers_count.C ?? 0) / simulated_personnality_stats_C) : 0;
+    const responseCountD =
+        simulated_personnality_stats_D > 0
+            ? Number(
+                ((good_answers_count.D ?? 0) / simulated_personnality_stats_D).toFixed(2)
+            ) * 100
+            : 0;
+    const responseCountI = 
+        simulated_personnality_stats_I > 0
+            ? Number(
+                ((good_answers_count.I ?? 0) / simulated_personnality_stats_I).toFixed(2)
+            ) * 100
+            : 0;
+    const responseCountS =
+        simulated_personnality_stats_S > 0
+            ? Number(
+                ((good_answers_count.S ?? 0) / simulated_personnality_stats_S).toFixed(2)
+            ) * 100
+            : 0;
+    const responseCountC = 
+        simulated_personnality_stats_C > 0
+            ? Number(
+                ((good_answers_count.C ?? 0) / simulated_personnality_stats_C).toFixed(2)
+            ) * 100
+            : 0;
     console.log(simulated_personnality_stats);
     console.log('D', simulated_personnality_stats_D, 'I', simulated_personnality_stats_I, 'S', simulated_personnality_stats_S, 'C', simulated_personnality_stats_C);
+    console.log('Response counts => D:', responseCountD, 'I:', responseCountI, 'S:', responseCountS, 'C:', responseCountC);
 
-    const prompt = `Ta tâche est de générer un exercice. L'utilisateur a un score de personnalité de [D:${personalityScore.D};I:${personalityScore.I};S:${personalityScore.S};C:${personalityScore.C}], un score de réponse de [D:${responseCountD};I:${responseCountI};S:${responseCountS};C:${responseCountC}] et un simulated_personnality_stats de [D:${simulated_personnality_stats_D};I:${simulated_personnality_stats_I};S:${simulated_personnality_stats_S};C:${simulated_personnality_stats_C}]. Concentre toi sur son score de réponse le plus faible pour la génération de l'exercice.`;
+    const prompt = `Ta tâche est de générer un exercice. L'utilisateur a un score de réponse de [D:${responseCountD};I:${responseCountI};S:${responseCountS};C:${responseCountC}]. Concentre toi sur son score de réponse le plus faible pour la génération de l'exercice. Exemple: Si D est à 0, I est à 30, S est 45 et C à 100, choisie une personnalité D.`;
 
     const response = await axios.post(API_BASE, {
         instruction: generation_instruction,
@@ -52,6 +73,7 @@ export const generateExercise = async (user_id: string): Promise<GenerateExercis
         rep_d: response.data.rep_d,
         personnality: response.data.personnality
     }
+    console.log('Personnalité ciblée:', generateExerciseResponse.personnality);
     // TODO handle non-200 responses properly
     if (response.status === 200) return generateExerciseResponse;
     else throw generateExerciseResponse;
