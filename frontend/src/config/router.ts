@@ -44,6 +44,26 @@ const routes: RouteRecordRaw[] = [
         }
       },
       {
+        path: '/exercise',
+        name: 'exercise',
+        component: () => import("../pages/Exercise.vue"),
+        meta: {
+          requiresAuth: true,
+          title: "Redskills : exercice",
+          withLayout: true
+        }
+      },
+      {
+        path: '/feedback',
+        name: 'feedback',
+        component: () => import("../pages/Feedback.vue"),
+        meta: {
+          requiresAuth: true,
+          title: "Redskills : feedback",
+          withLayout: true
+        }
+      },
+      {
         path: '/survey',
         name: 'survey',
         component: () => import("../pages/Survey.vue"),

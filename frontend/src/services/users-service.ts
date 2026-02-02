@@ -132,9 +132,9 @@ export const deleteProfile: any = async (user_id: string): Promise<DeleteProfile
     else throw deletedProfileResponse;
 }
 
-export const updateScores = async (user_id: string, property: string, value: Record<string, number>): Promise<UpdateProfileResponse> => {
-    const response = await axios.put(`${API_BASE}/scores/${user_id}`, null, {
-        params: { property: property, value: JSON.stringify(value) },
+export const updateScores = async (user_id: string, target: string | null, answer: boolean): Promise<UpdateProfileResponse> => {
+    const response = await axios.post(`${API_BASE}/feedback/${user_id}`, null, {
+        params: { target: target, answer: answer },
         validateStatus: () => true
     })
     const updatedProfileResponse: UpdateProfileResponse = {
@@ -143,19 +143,8 @@ export const updateScores = async (user_id: string, property: string, value: Rec
         message: response.data.message,
     }
     if (response.status === 200) return updatedProfileResponse;
-    else throw updatedProfileResponse;
-}
-
-export const updateGoodAnswersCount = async (user_id: string, property: string, value: Record<string, number>): Promise<UpdateProfileResponse> => {
-    const response = await axios.put(`${API_BASE}/good-answers/${user_id}`, null, {
-        params: { property: property, value: JSON.stringify(value) },
-        validateStatus: () => true
-    })
-    const updatedProfileResponse: UpdateProfileResponse = {
-        status: response.status,
-        type: response.data.type,
-        message: response.data.message,
+    else {
+        console.log('Error updating scores:', updatedProfileResponse);
+        throw updatedProfileResponse
     }
-    if (response.status === 200) return updatedProfileResponse;
-    else throw updatedProfileResponse;
 }
