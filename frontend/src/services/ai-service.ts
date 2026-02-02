@@ -58,7 +58,7 @@ export const generateExercise = async (user_id: string): Promise<GenerateExercis
     console.log('D', simulated_personnality_stats_D, 'I', simulated_personnality_stats_I, 'S', simulated_personnality_stats_S, 'C', simulated_personnality_stats_C);
     console.log('Response counts => D:', responseCountD, 'I:', responseCountI, 'S:', responseCountS, 'C:', responseCountC);
 
-    const prompt = `Ta tâche est de générer un exercice. L'utilisateur a un score de réponse de [D:${responseCountD};I:${responseCountI};S:${responseCountS};C:${responseCountC}]. Concentre toi sur son score de réponse le plus faible pour la génération de l'exercice. Exemple: Si D est à 0, I est à 30, S est 45 et C à 100, choisie une personnalité D.`;
+    const prompt = `Ta tâche est de générer un exercice. L'utilisateur a un score de réponse de [D:${responseCountD};I:${responseCountI};S:${responseCountS};C:${responseCountC}]. Concentre toi sur son score de réponse le plus faible pour la génération de l'exercice. Exemple: Si D est à 0, I est à 30, S est 45 et C à 100, choisie une personnalité D, tu ne choisira en aucun cas une personnalité C car l'utilisateur a son meilleur score de réponse dessus.`;
 
     const response = await axios.post(API_BASE, {
         instruction: generation_instruction,
