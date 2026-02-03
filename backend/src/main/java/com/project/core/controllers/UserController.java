@@ -70,36 +70,50 @@ public class UserController {
 
     @PostMapping("/create")
     public ResponseEntity<?> createUser(@RequestBody RegisterRequest userRequest) {
-        var map = new HashMap<String, Object>();
+        try {
+            var map = new HashMap<String, Object>();
 
-        if (userRequest.getEmail().trim().isEmpty())
-            return ApiResponse.errorResponse("L'email est vide", 400);
+            if (userRequest.getEmail().trim().isEmpty())
+                return ApiResponse.errorResponse("L'email est vide", 400);
 
-        var existingUser = userService.getUserByEmail(userRequest.getEmail());
-        if (existingUser != null)
-            return ApiResponse.errorResponse("L'utilisateur existe déjà !", 409);
+            var existingUser = userService.getUserByEmail(userRequest.getEmail());
+            if (existingUser != null)
+                return ApiResponse.errorResponse("L'utilisateur existe déjà !", 409);
 
-        if(userRequest.getPassword().isEmpty())
-            return ApiResponse.errorResponse("Le mot de passe ne doit pas être vide", 400);
+            if(userRequest.getPassword().isEmpty())
+                return ApiResponse.errorResponse("Le mot de passe ne doit pas être vide", 400);
 
-        if(userRequest.getFirstname().isEmpty() || userRequest.getLastname().isEmpty())
-            return ApiResponse.errorResponse("Les noms sont manquants", 400);
+            if(userRequest.getFirstname().isEmpty() || userRequest.getLastname().isEmpty())
+                return ApiResponse.errorResponse("Les noms sont manquants", 400);
 
-        var user = User.builder()
-            .email(userRequest.getEmail())
-            .password(userRequest.getPassword())
-            .firstname(userRequest.getFirstname())
-            .lastname(userRequest.getLastname())
-            .birthdate(userRequest.getBirthdate())
-            .build();
+            var user = User.builder()
+                .email(userRequest.getEmail())
+                .password(userRequest.getPassword())
+                .firstname(userRequest.getFirstname())
+                .lastname(userRequest.getLastname())
+                .birthdate(userRequest.getBirthdate())
+                .build();
 
-        var newUser = userService.createUser(user);
-        String generatedToken = jwtService.generateToken(newUser.getId(), newUser.getEmail());
-        map.putAll(Map.of("token", generatedToken, "userID", newUser.getId()));
-        return ApiResponse.successResponse("Votre compte a été créé", 201, map);
+            var newUser = userService.createUser(user);
+
+            String generatedToken = jwtService.generateToken(
+                newUser.getId(),
+                newUser.getEmail()
+            );
+
+            map.putAll(Map.of("token", generatedToken, "userID", newUser.getId()));
+            return ApiResponse.successResponse("Votre compte a été créé", 201, map);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return ApiResponse.errorResponse(
+                "Erreur interne lors de la création du compte",
+                500
+            );
+        }
     }
 
-    @PutMapping("/mutate/{user_id}")
+    @PutMapping("/{user_id}")
     public ResponseEntity<?> updateUser(@PathVariable String user_id, @RequestParam String property, @RequestParam String value){
         User updatedUser = userService.mutateUserProperty(user_id, property, value);
 
