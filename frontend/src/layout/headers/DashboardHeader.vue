@@ -12,9 +12,9 @@ const appStore = useAppStore();
     <header class="bg-white shadow-xl hover:shadow-2xl transition-shadow duration-300">
         <div class="m-6">
             <div class="w-full flex justify-between items-center">
-                <span class="text-lg font-semibold">
-                    Tableau de bord
-                </span>
+                <RouterLink to="/dashboard" class="text-lg font-semibold">
+                    Tableau de Bord
+                </RouterLink>
                 <nav class="hidden sm:block space-x-4">
                     <RouterLink to="/profile">Profil</RouterLink>
                     <RouterLink to="/settings">Paramètres</RouterLink>

@@ -63,6 +63,7 @@ onMounted(async () => {
                             "hover:shadow-xl hover:drop-shadow-xl transition-all duration-300 w-full",
                             "flex flex-row justify-center items-center gap-2"
                         )'
+                        @click="router.push('/profile')"
                     >
                         <UserCog class="size-5"/>
                         <span>Accéder au profil</span>
